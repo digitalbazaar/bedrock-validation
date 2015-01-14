@@ -22,7 +22,15 @@
     "url": "https://github.com/digitalbazaar/bedrock-validation/issues"
   },
   "homepage": "https://github.com/digitalbazaar/bedrock-validation",
+  "dependencies": {
+    "async": "~0.9.0",
+    "json-schema": "git://github.com/digitalbazaar/json-schema.git"
+  },
   "peerDependencies": {
     "bedrock": "~0.3.0"
-  }
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/validation"
 }
