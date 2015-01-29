@@ -7,7 +7,7 @@
 var validation = require('../lib/validation');
 
 // FIXME: add more tests, test for proper errors
-describe('JSON-LD REST API input schema', function() {
+describe('bedrock-validation', function() {
   describe('comment', function() {
     var schema = validation.getSchema('comment');
     it('should be an Object', function(done) {
