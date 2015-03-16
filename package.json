@@ -2,7 +2,7 @@
   "name": "bedrock-validation",
   "version": "0.1.1-dev",
   "description": "Bedrock validation",
-  "main": "index.js",
+  "main": "./lib/validation",
   "scripts": {
     "test": "node test.js"
   },
@@ -31,6 +31,5 @@
   },
   "directories": {
     "lib": "./lib"
-  },
-  "main": "./lib/validation"
+  }
 }
