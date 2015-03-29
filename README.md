@@ -40,7 +40,7 @@ via the `bedrock.config.validation.schema.skip` configuration option. If any
 schema name matches a previously loaded schema, it will override that
 schema.
 
-For more documentation on configuration, see [config.js](https://github.com/digitalbazaar/bedrock-validation/blob/master/lib/config.js).
+For more documentation on configuration, see [config.js](./lib/config.js).
 
 ## API
 
