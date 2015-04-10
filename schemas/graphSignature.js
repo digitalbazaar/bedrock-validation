@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
  */
-var tools = require('bedrock').tools;
+var bedrock = require('bedrock');
 
 var jsonldType = require('./jsonldType');
 var w3cDateTime = require('./w3cDateTime');
@@ -29,7 +29,7 @@ var schema = {
 
 module.exports = function(extend) {
   if(extend) {
-    return tools.extend(true, tools.clone(schema), extend);
+    return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
 };

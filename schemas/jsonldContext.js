@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
  */
-var tools = require('bedrock').tools;
+var bedrock = require('bedrock');
 
 module.exports = function(context, extend) {
   var schema = {
@@ -17,7 +17,7 @@ module.exports = function(context, extend) {
     }]
   };
   if(extend) {
-    return tools.extend(true, tools.clone(schema), extend);
+    return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
 };
