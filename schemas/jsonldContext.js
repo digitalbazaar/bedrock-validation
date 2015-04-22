@@ -10,12 +10,15 @@ module.exports = function(context, extend) {
     description: 'A JSON-LD Context',
     type: [{
       type: 'string',
-      enum: [context]
+      // enum added below if context param truthy
     }, {
       type: 'object'
       // FIXME: improve context object validator
     }]
   };
+  if(context) {
+    schema.type[0].enum = [context];
+  }
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
