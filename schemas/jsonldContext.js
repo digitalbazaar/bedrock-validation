@@ -9,7 +9,7 @@ module.exports = function(context, extend) {
     title: 'JSON-LD context',
     description: 'A JSON-LD Context',
     type: [{
-      type: 'string',
+      type: 'string'
       // enum added below if context param truthy
     }, {
       type: 'object'
