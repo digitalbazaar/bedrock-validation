@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Added
+- Support validating JSON-LD context arrays.
+
 ### Changed
 - Accept and ignore null as jsonldContext context param.
 
