@@ -113,7 +113,7 @@ describe('bedrock-validation', function() {
       var result = validation.validate('slug', 'a23');
       result.valid.should.be.true;
       // 32 chars
-      var result = validation.validate(
+      result = validation.validate(
         'slug', 'a2345678901234567890123456789012');
       result.valid.should.be.true;
     });
@@ -124,7 +124,42 @@ describe('bedrock-validation', function() {
     it('should reject invalid characters', function() {
       var result = validation.validate('slug', 'badchar@');
       result.valid.should.be.false;
-      var result = validation.validate('slug', '0numstart');
+      result = validation.validate('slug', '0numstart');
+      result.valid.should.be.false;
+    });
+  });
+
+  describe('jsonldContext', function() {
+    var schema = validation.getSchema('jsonldContext');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accept a URL', function() {
+      var schema = require('../schemas/jsonldContext')('http://foo.com/v1');
+      var result = validation.validateInstance('http://foo.com/v1', schema);
+      result.valid.should.be.true;
+    });
+    it('should reject the wrong a URL', function() {
+      var schema = require('../schemas/jsonldContext')('http://foo.com/v1');
+      var result = validation.validateInstance('http://foo.com/v2', schema);
+      result.valid.should.be.false;
+    });
+    it('should accept an array of URLs', function() {
+      var schema = require('../schemas/jsonldContext')([
+        'http://foo.com/v1',
+        'http://bar.com/v1'
+      ]);
+      var result = validation.validateInstance(
+        ['http://foo.com/v1', 'http://bar.com/v1'], schema);
+      result.valid.should.be.true;
+    });
+    it('should reject the wrong array of URLs', function() {
+      var schema = require('../schemas/jsonldContext')([
+        'http://foo.com/v1',
+        'http://bar.com/v1'
+      ]);
+      var result = validation.validateInstance(
+        ['http://foo.com/v1', 'http://wrong.com/v1'], schema);
       result.valid.should.be.false;
     });
   });
