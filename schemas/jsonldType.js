@@ -14,12 +14,12 @@ module.exports = function(types, alternates) {
   // allow single object
   if(types.length === 1) {
     schema.type.push({
-     type: 'string',
-     enum: types,
-     errors: {
-       invalid: 'The JSON-LD type information is invalid.',
-       missing: 'The JSON-LD type information is missing.'
-     }
+      type: 'string',
+      enum: types,
+      errors: {
+        invalid: 'The JSON-LD type information is invalid.',
+        missing: 'The JSON-LD type information is missing.'
+      }
     });
   }
 
