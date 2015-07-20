@@ -163,4 +163,12 @@ describe('bedrock-validation', function() {
       result.valid.should.be.false;
     });
   });
+
+  // FIXME: This is a stub
+  describe('credential', function() {
+    var schema = validation.getSchema('credential');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+  });
 });
