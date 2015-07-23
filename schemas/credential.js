@@ -15,7 +15,6 @@ var schema = {
   properties: {
     '@context': schemas.url({required: true}),
     issuer: schemas.identifier({required: true}),
-    recipient: schemas.identifier({required: true}),
     issued: schemas.w3cDateTime({required: true}),
     claim: {
         required: true,
