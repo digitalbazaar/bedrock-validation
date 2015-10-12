@@ -13,14 +13,14 @@ var schema = {
   type: 'object',
   title: 'Credential',
   properties: {
-    '@context': schemas.url({required: true}),
+    '@context': {required: true},
     issuer: schemas.identifier({required: true}),
     issued: schemas.w3cDateTime({required: true}),
     claim: {
-        required: true,
-        properties: {
-          id: schemas.identifier({required: true})
-        }
+      required: true,
+      properties: {
+        id: schemas.identifier({required: true})
+      }
     }
   }
 };
