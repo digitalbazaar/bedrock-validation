@@ -4,10 +4,35 @@
 
 'use strict';
 
+var expect = GLOBAL.chai.expect;
 var validation = require('../lib/validation');
+var validate = validation.validate;
 
 // FIXME: add more tests, test for proper errors
 describe('bedrock-validation', function() {
+  describe('invalid schema specified', function() {
+    describe('synchronous mode', function() {
+      it('should throw an error', function() {
+        expect(function() {
+          validate('test-unknown-schema', {some: 'object'});})
+          .to.throw(
+            'UnknownSchema: Could not validate data; unknown schema name ' +
+            '(test-unknown-schema).');
+      });
+    });
+    describe('asynchronous mode', function() {
+      it('should call callback with an error', function(done) {
+        validate('test-unknown-schema', {some: 'object'}, function(err) {
+          should.exist(err);
+          err.message.should.equal(
+            'Could not validate data; unknown schema name ' +
+            '(test-unknown-schema).');
+          done();
+        });
+      });
+    });
+  });
+
   describe('comment', function() {
     var schema = validation.getSchema('comment');
     it('should be an Object', function() {
