@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Changed
+- Use jsonldContext schema to validate Credential @context.
+
 ## [1.0.3] - 2016-01-06
 
 ### Fixed
