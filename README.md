@@ -4,6 +4,10 @@ A [bedrock][] module that provides a express middleware and an API for
 validating data structures and their contents. **bedrock-validation** uses
 schemas based on [JSON schema][].
 
+## Requirements
+
+- npm v3+
+
 ## Quick Examples
 
 ```
