@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.0.3] - 2016-06-13
+
+### Fixed
+- Accept dates before the year 2000 (1000+). A future fix should
+  also accept dates 0-1000.
+
 ## [2.0.2] - 2016-03-15
 
 ### Changed
@@ -47,12 +53,3 @@
 ## 0.1.0 (up to early 2015)
 
 - See git history for changes.
-
-[Unreleased]: https://github.com/digitalbazaar/bedrock-validation/compare/2.0.2...HEAD
-[2.0.2]: https://github.com/digitalbazaar/bedrock-validation/compare/2.0.1...2.0.2
-[2.0.1]: https://github.com/digitalbazaar/bedrock-validation/compare/2.0.0...2.0.1
-[2.0.0]: https://github.com/digitalbazaar/bedrock-validation/compare/1.0.3...2.0.0
-[1.0.3]: https://github.com/digitalbazaar/bedrock-validation/compare/1.0.2...1.0.3
-[1.0.2]: https://github.com/digitalbazaar/bedrock-validation/compare/1.0.1...1.0.2
-[1.0.1]: https://github.com/digitalbazaar/bedrock-validation/compare/1.0.0...1.0.1
-[1.0.0]: https://github.com/digitalbazaar/bedrock-validation/compare/0.1.0...1.0.0
