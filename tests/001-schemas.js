@@ -189,6 +189,87 @@ describe('bedrock-validation', function() {
     });
   });
 
+  describe('linkedDataSignature', function() {
+    var schema = validation.getSchema('linkedDataSignature');
+
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+
+    it('should validate a LinkedDataSignature2015 signature', function() {
+      var signature = {
+        type: 'LinkedDataSignature2015',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.true;
+    });
+
+    it('should validate a LinkedDataSignature2016 signature', function() {
+      var signature = {
+        type: 'LinkedDataSignature2016',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.true;
+    });
+
+    it('should NOT validate a GraphSignature2012 signature', function() {
+      var signature = {
+        type: 'GraphSignature2012',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a signature w/missing type', function() {
+      var signature = {
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a LinkedDataSignature2015 signature w/missing created', function() {
+      var signature = {
+        type: 'LinkedDataSignature2015',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a LinkedDataSignature2015 signature w/missing creator', function() {
+      var signature = {
+        type: 'LinkedDataSignature2015',
+        created: '2016-01-01T01:00:00Z',
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a LinkedDataSignature2015 signature w/missing signature', function() {
+      var signature = {
+        type: 'LinkedDataSignature2015',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1'
+      };
+      var result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+  });
+
   // FIXME: This is a stub
   describe('credential', function() {
     var schema = validation.getSchema('credential');
