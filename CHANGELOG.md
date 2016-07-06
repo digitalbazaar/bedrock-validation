@@ -1,5 +1,7 @@
 # bedrock-validation ChangeLog
 
+## [2.1.0] - 2016-07-06
+
 ### Added
 - Add `linkedDataSignature` schema.
 
