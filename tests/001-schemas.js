@@ -1,10 +1,11 @@
 /*
  * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
  */
-
+/* globals describe, it, should */
+/* jshint -W030, node: true */
 'use strict';
 
-var expect = GLOBAL.chai.expect;
+var expect = global.chai.expect;
 var validation = require('../lib/validation');
 var validate = validation.validate;
 
