@@ -73,6 +73,41 @@ describe('bedrock-validation', function() {
     });
   });
 
+  describe('email', function() {
+    var schema = validation.getSchema('email');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should reject empty emails', function() {
+      var result = validation.validate('email', '');
+      result.valid.should.be.false;
+    });
+    it('should reject emails without `@`', function() {
+      var result = validation.validate('email', 'abcdefg');
+      result.valid.should.be.false;
+    });
+    it('should accept valid emails', function() {
+      var small = validation.validate('email', 'a@b.io');
+      small.errors.should.be.empty;
+      small.valid.should.be.true;
+    });
+    it('should accept normal non-letter symbols', function() {
+      var result = validation.validate(
+        'email', 'abc123~!$%^&*_=+-@example.org');
+      result.valid.should.be.true;
+    });
+    it('should accept emails with uppercase chars', function() {
+      var schema = validation.getSchema('email');
+      var result = validation.validateInstance('aBC@DEF.com', schema);
+      result.valid.should.be.true;
+    });
+    it('should reject emails with uppercase chars', function() {
+      var schema = validation.schemas.email({}, {lowerCaseOnly: true});
+      var result = validation.validateInstance('aBC@DEF.com', schema);
+      result.valid.should.be.false;
+    });
+  });
+
   describe('nonce', function() {
     var schema = validation.getSchema('nonce');
     it('should be an Object', function() {

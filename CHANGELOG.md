@@ -1,5 +1,8 @@
 # bedrock-validation ChangeLog
 
+### Added
+- Add `lowerCaseOnly` option to email validator.
+
 ## 2.1.1 - 2016-07-20
 
 ### Changed

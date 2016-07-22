@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2016 Digital Bazaar, Inc. All rights reserved.
  */
 var bedrock = require('bedrock');
 
@@ -17,7 +17,13 @@ var schema = {
   }
 };
 
-module.exports = function(extend) {
+module.exports = function(extend, options) {
+  if(options && options.lowerCaseOnly) {
+    extend = extend || {};
+    if(!('pattern' in extend)) {
+      extend.pattern = "^[-a-z0-9~!$%^&*_=+}{\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\'?]+)*@(((([a-z0-9]{1}[a-z0-9\\-]{0,62}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,6})$";
+    }
+  }
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
