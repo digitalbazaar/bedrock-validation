@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 2.2.1 - 2016-09-22
+
+### Changed
+- Restructure test framework for CI.
+
 ## 2.2.0 - 2016-07-22
 
 ### Added
