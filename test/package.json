@@ -1,9 +1,11 @@
 {
-  "name": "bedrock-validation",
-  "version": "2.2.1-0",
-  "description": "Bedrock validation",
+  "name": "bedrock-validation-test",
+  "version": "0.0.1-0",
+  "description": "Bedrock validation test",
   "main": "./lib",
-  "scripts": {},
+  "scripts": {
+    "test": "node --preserve-symlinks test.js test"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/digitalbazaar/bedrock-validation"
@@ -22,12 +24,8 @@
   "homepage": "https://github.com/digitalbazaar/bedrock-validation",
   "dependencies": {
     "async": "^1.4.2",
+    "bedrock": "^1.0.0",
+    "bedrock-test": "^1.0.0",
     "json-schema": "digitalbazaar/json-schema"
-  },
-  "peerDependencies": {
-    "bedrock": "^1.0.0"
-  },
-  "directories": {
-    "lib": "./lib"
   }
 }

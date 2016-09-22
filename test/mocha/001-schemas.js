@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2016 Digital Bazaar, Inc. All rights reserved.
  */
 /* globals describe, it, should */
 /* jshint -W030, node: true */
 'use strict';
 
 var expect = global.chai.expect;
-var validation = require('../lib/validation');
+var validation = require('bedrock-validation');
 var validate = validation.validate;
 
 // FIXME: add more tests, test for proper errors
@@ -196,17 +196,17 @@ describe('bedrock-validation', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept a URL', function() {
-      var schema = require('../schemas/jsonldContext')('http://foo.com/v1');
+      var schema = require('../../schemas/jsonldContext')('http://foo.com/v1');
       var result = validation.validateInstance('http://foo.com/v1', schema);
       result.valid.should.be.true;
     });
     it('should reject the wrong a URL', function() {
-      var schema = require('../schemas/jsonldContext')('http://foo.com/v1');
+      var schema = require('../../schemas/jsonldContext')('http://foo.com/v1');
       var result = validation.validateInstance('http://foo.com/v2', schema);
       result.valid.should.be.false;
     });
     it('should accept an array of URLs', function() {
-      var schema = require('../schemas/jsonldContext')([
+      var schema = require('../../schemas/jsonldContext')([
         'http://foo.com/v1',
         'http://bar.com/v1'
       ]);
@@ -215,7 +215,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.true;
     });
     it('should reject the wrong array of URLs', function() {
-      var schema = require('../schemas/jsonldContext')([
+      var schema = require('../../schemas/jsonldContext')([
         'http://foo.com/v1',
         'http://bar.com/v1'
       ]);
