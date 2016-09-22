@@ -2,7 +2,6 @@
   "name": "bedrock-validation-test",
   "version": "0.0.1-0",
   "description": "Bedrock validation test",
-  "main": "./lib",
   "scripts": {
     "test": "node --preserve-symlinks test.js test"
   },
