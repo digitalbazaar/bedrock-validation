@@ -166,16 +166,20 @@ describe('bedrock-validation', function() {
     it('should reject slugs that are too long', function() {
       // 33 chars
       var result = validation.validate(
-        'slug', '123456789012345678901234567890123');
+        'slug', '12345678901234567890123456789012345678901');
       result.valid.should.be.false;
     });
     it('should accept valid slugs', function() {
       // 3 chars
       var result = validation.validate('slug', 'a23');
       result.valid.should.be.true;
-      // 32 chars
+      // 40 chars
       result = validation.validate(
-        'slug', 'a2345678901234567890123456789012');
+        'slug', '1234567890123456789012345678901234567890');
+      result.valid.should.be.true;
+      // uuids
+      result = validation.validate(
+        'slug', '2f5f3815-fba0-4e07-a248-d79c26ca8fd6');
       result.valid.should.be.true;
     });
     it('should accept normal non-letter characters', function() {
@@ -185,7 +189,7 @@ describe('bedrock-validation', function() {
     it('should reject invalid characters', function() {
       var result = validation.validate('slug', 'badchar@');
       result.valid.should.be.false;
-      result = validation.validate('slug', '0numstart');
+      result = validation.validate('slug', '-hyphenstart');
       result.valid.should.be.false;
     });
   });
