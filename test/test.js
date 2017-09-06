@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
 
-var bedrock = require('bedrock');
+const bedrock = require('bedrock');
 require('bedrock-validation');
 
 require('bedrock-test');

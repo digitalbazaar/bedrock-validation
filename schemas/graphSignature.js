@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  */
-var bedrock = require('bedrock');
+const bedrock = require('bedrock');
 
-var jsonldType = require('./jsonldType');
-var w3cDateTime = require('./w3cDateTime');
-var identifier = require('./identifier');
+const jsonldType = require('./jsonldType');
+const w3cDateTime = require('./w3cDateTime');
+const identifier = require('./identifier');
 
-var schema = {
+const schema = {
   required: true,
   title: 'GraphSignature',
   description: 'A digital signature on a graph.',
@@ -19,7 +19,8 @@ var schema = {
     created: w3cDateTime(),
     signatureValue: {
       title: 'Digital Signature Value',
-      description: 'A base-64 encoded byte string containing the result of the GraphSignature2012 algorithm.',
+      description: 'A base-64 encoded byte string containing the result of ' +
+        'the GraphSignature2012 algorithm.',
       required: true,
       type: 'string'
     }

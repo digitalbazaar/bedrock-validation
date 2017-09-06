@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
-var bedrock = require('bedrock');
-var constants = bedrock.config.constants;
+const bedrock = require('bedrock');
+const constants = bedrock.config.constants;
 
-var schemas = {};
+const schemas = {};
 schemas.identifier = require('./identifier');
 schemas.jsonldContext = require('./jsonldContext');
 schemas.url = require('./url');
 schemas.w3cDateTime = require('./w3cDateTime');
 
 // TODO: Improve this schema
-var schema = {
+const schema = {
   type: 'object',
   title: 'Credential',
   properties: {

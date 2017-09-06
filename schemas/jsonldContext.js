@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  */
-var bedrock = require('bedrock');
+const bedrock = require('bedrock');
 
 module.exports = function(context, extend) {
-  var schema = {
+  const schema = {
     required: true,
     title: 'JSON-LD context',
     description: 'A JSON-LD Context'
@@ -31,7 +31,7 @@ module.exports = function(context, extend) {
         missing: 'The JSON-LD context information is missing.'
       }
     };
-    for(var i = 0; i < context.length; ++i) {
+    for(let i = 0; i < context.length; ++i) {
       if(typeof context[i] === 'string') {
         schema.type.items.push({
           type: 'string',

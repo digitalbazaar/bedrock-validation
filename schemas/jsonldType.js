@@ -1,11 +1,12 @@
 /*
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  */
 module.exports = function(types, alternates) {
-  var schema = {
+  const schema = {
     required: true,
     title: 'Object Type',
-    description: 'A set of terms, CURIEs, or URLs specifying the type of the object.',
+    description: 'A set of terms, CURIEs, or URLs specifying the type of ' +
+      'the object.',
     type: []
   };
 
@@ -41,8 +42,8 @@ module.exports = function(types, alternates) {
   // HACK: madness to support given types *must* exist, while allowing
   // up to <alternates> other custom types
   if(alternates !== undefined) {
-    for(var before = 0; before <= alternates; ++before) {
-      var s = {
+    for(let before = 0; before <= alternates; ++before) {
+      const s = {
         type: 'array',
         minItems: types.length,
         uniqueItems: true,
@@ -55,10 +56,10 @@ module.exports = function(types, alternates) {
           missing: 'The JSON-LD type information is missing.'
         }
       };
-      for(var i = 0; i < before; ++i) {
+      for(let i = 0; i < before; ++i) {
         s.items.push({type: 'string'});
       }
-      for(var i = 0; i < types.length; ++i) {
+      for(let i = 0; i < types.length; ++i) {
         s.items.push({
           type: 'string',
           enum: types

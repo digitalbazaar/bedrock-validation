@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2012-2017 Digital Bazaar, Inc. All rights reserved.
  */
-var bedrock = require('bedrock');
+const bedrock = require('bedrock');
 
-var schema = {
+const schema = {
   required: true,
   title: 'Slug',
   description: 'A short identifier within a URL.',
@@ -12,7 +12,7 @@ var schema = {
   minLength: 3,
   maxLength: 40,
   errors: {
-    invalid: 
+    invalid:
       'The slug must start with a letter or number, contain only lowercase ' +
       'letters, numbers, hyphens, periods, underscores, and tildes. It must ' +
       'between 3 and 40 characters in length.',

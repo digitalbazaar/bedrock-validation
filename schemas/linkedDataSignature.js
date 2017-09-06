@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
-var bedrock = require('bedrock');
+const bedrock = require('bedrock');
 
-var w3cDateTime = require('./w3cDateTime');
-var identifier = require('./identifier');
+const w3cDateTime = require('./w3cDateTime');
+const identifier = require('./identifier');
 
-var schema = {
+const schema = {
   required: true,
   title: 'Linked Data Signature',
   description: 'A Linked Data digital signature.',
@@ -23,7 +23,8 @@ var schema = {
     created: w3cDateTime(),
     signatureValue: {
       title: 'Digital Signature Value',
-      description: 'The Base64 encoding of the result of the signature algorithm.',
+      description: 'The Base64 encoding of the result of the signature ' +
+        'algorithm.',
       required: true,
       type: 'string'
     }
