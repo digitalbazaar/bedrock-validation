@@ -6,7 +6,7 @@ const bedrock = require('bedrock');
 const w3cDateTime = require('./w3cDateTime');
 const identifier = require('./identifier');
 
-const schema = {
+const signature = {
   required: true,
   title: 'Linked Data Signature',
   description: 'A Linked Data digital signature.',
@@ -32,7 +32,16 @@ const schema = {
   additionalProperties: false
 };
 
-module.exports = function(extend) {
+const schema = {
+  title: 'Linked Data Signatures',
+  type: [{
+    type: 'array',
+    items: {type: signature},
+    minItems: 1,
+  }, signature]
+};
+
+module.exports = extend => {
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
