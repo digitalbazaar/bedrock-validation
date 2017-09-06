@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 2.3.0 - 2017-09-06
+
+### Added
+- Support multiple signatures in `linkedDataSignature` schema.
+
 ## 2.2.1 - 2016-09-22
 
 ### Changed
