@@ -5,15 +5,15 @@ var bedrock = require('bedrock');
 
 var schema = {
   required: true,
-  title: 'Equihash Signature',
-  description: 'An Equihash digital signature.',
+  title: 'Equihash Proof',
+  description: 'An Equihash proof.',
   type: 'object',
   properties: {
     type: {
-      title: 'Equihash Signature Type',
+      title: 'Equihash Proof Type',
       required: true,
       type: 'string',
-      enum: ['EquihashSignature2017']
+      enum: ['EquihashProof2017']
     },
     equihashParameterN: {
       title: 'Equihash `n` Parameter',
@@ -28,11 +28,11 @@ var schema = {
     nonce: {
       title: 'Equihash `nonce` Parameter',
       required: true,
-      type: 'integer'
+      type: 'string'
     },
-    signatureValue: {
-      title: 'Digital Signature Value',
-      description: 'The encoding of the result of the signature algorithm.',
+    proofValue: {
+      title: 'Proof Value',
+      description: 'The encoding of the result of the proof algorithm.',
       required: true,
       type: 'string'
     }
