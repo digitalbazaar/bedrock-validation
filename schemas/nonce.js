@@ -4,7 +4,6 @@
 const bedrock = require('bedrock');
 
 const schema = {
-  required: true,
   title: 'Nonce',
   description: 'A single use secure unique string.',
   type: 'string',

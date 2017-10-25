@@ -7,15 +7,13 @@ const w3cDateTime = require('./w3cDateTime');
 const identifier = require('./identifier');
 
 const signature = {
-  required: true,
   title: 'Linked Data Signature',
   description: 'A Linked Data digital signature.',
   type: 'object',
   properties: {
-    id: identifier({required: false}),
+    id: identifier(),
     type: {
       title: 'Linked Data Signature Type',
-      required: true,
       type: 'string',
       enum: ['LinkedDataSignature2015', 'LinkedDataSignature2016']
     },
@@ -25,18 +23,18 @@ const signature = {
       title: 'Digital Signature Value',
       description: 'The Base64 encoding of the result of the signature ' +
         'algorithm.',
-      required: true,
       type: 'string'
-    }
+    },
   },
-  additionalProperties: false
+  // NOTE: id is not required
+  required: ['type', 'creator', 'created', 'signatureValue']
 };
 
 const schema = {
   title: 'Linked Data Signatures',
-  type: [{
+  anyOf: [{
     type: 'array',
-    items: {type: signature},
+    items: signature,
     minItems: 1,
   }, signature]
 };

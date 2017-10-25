@@ -4,7 +4,6 @@
 const bedrock = require('bedrock');
 
 const schema = {
-  required: true,
   title: 'ID',
   description: 'A unique identifier.',
   type: 'string',

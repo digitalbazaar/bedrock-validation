@@ -4,7 +4,6 @@
 const bedrock = require('bedrock');
 
 const schema = {
-  required: true,
   title: 'Label',
   description: 'A short, descriptive label.',
   type: 'string',

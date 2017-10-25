@@ -3,7 +3,6 @@
  */
 module.exports = function(types, alternates) {
   const schema = {
-    required: true,
     title: 'Object Type',
     description: 'A set of terms, CURIEs, or URLs specifying the type of ' +
       'the object.',

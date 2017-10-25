@@ -5,12 +5,11 @@ const bedrock = require('bedrock');
 
 module.exports = function(context, extend) {
   const schema = {
-    required: true,
     title: 'JSON-LD context',
     description: 'A JSON-LD Context'
   };
   if(!Array.isArray(context)) {
-    schema.type = [{
+    schema.anyOf = [{
       type: 'string'
       // enum added below if context param truthy
     }, {
@@ -18,7 +17,7 @@ module.exports = function(context, extend) {
       // FIXME: improve context object validator
     }];
     if(context) {
-      schema.type[0].enum = [context];
+      schema.anyOf[0].enum = [context];
     }
   } else {
     schema.type = {
