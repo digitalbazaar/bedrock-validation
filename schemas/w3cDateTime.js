@@ -4,7 +4,6 @@
 const bedrock = require('bedrock');
 
 const schema = {
-  required: true,
   title: 'W3C Date/Time',
   description: 'A W3C-formatted date and time combination.',
   type: 'string',

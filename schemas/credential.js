@@ -21,15 +21,17 @@ const schema = {
     //  constants.IDENTITY_CONTEXT_V1_URL,
     //  constants.CREDENTIALS_CONTEXT_V1_URL
     //]),
-    issuer: schemas.identifier({required: true}),
-    issued: schemas.w3cDateTime({required: true}),
+    issuer: schemas.identifier(),
+    issued: schemas.w3cDateTime(),
     claim: {
       required: true,
       properties: {
-        id: schemas.identifier({required: true})
-      }
+        id: schemas.identifier()
+      },
+      required: ['id']
     }
-  }
+  },
+  required: ['issuer', 'issued', 'claim']
 };
 
 module.exports = function(extend) {

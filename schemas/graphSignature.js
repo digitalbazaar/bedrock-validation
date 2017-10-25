@@ -8,12 +8,11 @@ const w3cDateTime = require('./w3cDateTime');
 const identifier = require('./identifier');
 
 const schema = {
-  required: true,
   title: 'GraphSignature',
   description: 'A digital signature on a graph.',
   type: 'object',
   properties: {
-    id: identifier({required: false}),
+    id: identifier(),
     type: jsonldType('GraphSignature2012'),
     creator: identifier(),
     created: w3cDateTime(),
@@ -21,9 +20,10 @@ const schema = {
       title: 'Digital Signature Value',
       description: 'A base-64 encoded byte string containing the result of ' +
         'the GraphSignature2012 algorithm.',
-      required: true,
       type: 'string'
-    }
+    },
+    // NOTE: id is not required
+    required: ['type', 'creator', 'created', 'signatureValue']
   },
   additionalProperties: false
 };

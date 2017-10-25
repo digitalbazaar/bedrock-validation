@@ -4,7 +4,6 @@
 const bedrock = require('bedrock');
 
 const schema = {
-  required: true,
   title: 'Private Key PEM',
   description: 'A cryptographic Private Key in PEM format.',
   type: 'string',

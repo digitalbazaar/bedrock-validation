@@ -4,7 +4,6 @@
 const bedrock = require('bedrock');
 
 const schema = {
-  required: true,
   title: 'URL',
   description: 'A universal resource location.',
   type: 'string',
