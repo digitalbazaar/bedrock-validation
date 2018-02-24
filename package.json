@@ -22,8 +22,7 @@
   "homepage": "https://github.com/digitalbazaar/bedrock-validation",
   "dependencies": {
     "ajv": "^5.3.0",
-    "async": "^1.4.2",
-    "json-schema": "digitalbazaar/json-schema"
+    "async": "^1.4.2"
   },
   "peerDependencies": {
     "bedrock": "^1.0.0"
