@@ -1,8 +1,7 @@
-/*
- * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
+/*!
+ * Copyright (c) 2012-2018 Digital Bazaar, Inc. All rights reserved.
  */
 const bedrock = require('bedrock');
-const constants = bedrock.config.constants;
 
 const schemas = {};
 schemas.identifier = require('./identifier');
