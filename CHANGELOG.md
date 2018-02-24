@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 3.0.0 - TBD
+## 3.0.0 - 2018-02-24
 - Switch core validator to `ajv`.
 
 ## 2.3.0 - 2017-09-06
