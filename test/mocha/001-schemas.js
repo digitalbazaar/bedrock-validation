@@ -330,13 +330,13 @@ describe('bedrock-validation', function() {
       result.valid.should.be.true;
     });
 
-    it('should NOT validate a JSON patch this is an empty array', function() {
+    it('should NOT validate a JSON patch that is an empty array', function() {
       const patch = [];
       const result = validation.validateInstance(patch, schema);
       result.valid.should.be.false;
     });
 
-    it('should NOT validate a JSON patch this is not an array', function() {
+    it('should NOT validate a JSON patch that is not an array', function() {
       const patch = {
         op: 'add', path: '/email', value: 'pdoe@example.com'
       };
