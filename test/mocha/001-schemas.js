@@ -314,4 +314,96 @@ describe('bedrock-validation', function() {
       schema.should.be.an.instanceof(Object);
     });
   });
+
+  describe('jsonPatch', function() {
+    const schema = validation.getSchema('jsonPatch');
+
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+
+    it('should validate a JSON patch', function() {
+      const patch = [
+        {op: 'add', path: '/email', value: 'pdoe@example.com'}
+      ];
+      const result = validation.validateInstance(patch, schema);
+      result.valid.should.be.true;
+    });
+
+    it('should NOT validate a JSON patch this is an empty array', function() {
+      const patch = [];
+      const result = validation.validateInstance(patch, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a JSON patch this is not an array', function() {
+      const patch = {
+        op: 'add', path: '/email', value: 'pdoe@example.com'
+      };
+      const result = validation.validateInstance(patch, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a JSON patch with an extra property', function() {
+      const patch = [
+        {op: 'add', path: '/email', value: 'pdoe@example.com', extra: true}
+      ];
+      const result = validation.validateInstance(patch, schema);
+      result.valid.should.be.false;
+    });
+  });
+
+  describe('sequencedPatch', function() {
+    const schema = validation.getSchema('sequencedPatch');
+
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+
+    it('should validate a sequenced JSON patch', function() {
+      const doc = {
+        target: 'some-identifier',
+        patch: [
+          {op: 'add', path: '/email', value: 'pdoe@example.com'}
+        ],
+        sequence: 1
+      };
+      const result = validation.validateInstance(doc, schema);
+      result.valid.should.be.true;
+    });
+
+    it('should NOT validate a sequenced JSON patch without a sequence', function() {
+      const doc = {
+        target: 'some-identifier',
+        patch: [
+          {op: 'add', path: '/email', value: 'pdoe@example.com'}
+        ]
+      };
+      const result = validation.validateInstance(doc, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a sequenced JSON patch without a target', function() {
+      const doc = {
+        patch: [
+          {op: 'add', path: '/email', value: 'pdoe@example.com'}
+        ],
+        sequence: 1
+      };
+      const result = validation.validateInstance(doc, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a sequenced JSON patch with a negative sequence', function() {
+      const doc = {
+        target: 'some-identifier',
+        patch: [
+          {op: 'add', path: '/email', value: 'pdoe@example.com'}
+        ],
+        sequence: -1
+      };
+      const result = validation.validateInstance(doc, schema);
+      result.valid.should.be.false;
+    });
+  });
 });

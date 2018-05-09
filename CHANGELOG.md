@@ -1,5 +1,8 @@
 # bedrock-validation ChangeLog
 
+### Added
+- Add `jsonPatch` and `sequencedPatch` validators.
+
 ## 2.3.0 - 2017-09-06
 
 ### Added
