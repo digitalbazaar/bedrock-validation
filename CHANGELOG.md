@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 2.4.1 - 2018-06-28
+
+### Changed
+- Use child logger.
+
 ## 2.4.0 - 2018-05-10
 
 ### Added
