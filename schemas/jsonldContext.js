@@ -20,7 +20,7 @@ module.exports = function(context, extend) {
       schema.anyOf[0].enum = [context];
     }
   } else {
-    schema.type = {
+    Object.assign(schema, {
       type: 'array',
       minItems: context.length,
       uniqueItems: true,
@@ -29,16 +29,16 @@ module.exports = function(context, extend) {
         invalid: 'The JSON-LD context information is invalid.',
         missing: 'The JSON-LD context information is missing.'
       }
-    };
+    });
     for(let i = 0; i < context.length; ++i) {
       if(typeof context[i] === 'string') {
-        schema.type.items.push({
+        schema.items.push({
           type: 'string',
           enum: [context[i]]
         });
       } else {
         // FIXME: improve context object validator
-        schema.type.items.push({type: 'object'});
+        schema.items.push({type: 'object'});
       }
     }
   }
