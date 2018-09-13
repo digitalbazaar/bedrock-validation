@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 3.1.1 - 2018-09-13
+
+### Fixed
+- Improper use of arrow function in `validate` API.
+
 ## 3.1.0 - 2018-09-13
 
 ### Added
