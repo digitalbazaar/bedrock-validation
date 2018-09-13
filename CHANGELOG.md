@@ -1,5 +1,16 @@
 # bedrock-validation ChangeLog
 
+## 3.1.0 - 2018-09-13
+
+### Added
+- Schema `linkedDataSignature2018`.
+
+### Changed
+- Errors are now 2.x compatible.
+
+### Fixed
+- Fixed test suite.
+
 ## 3.0.0 - 2018-02-24
 - Switch core validator to `ajv`.
 
