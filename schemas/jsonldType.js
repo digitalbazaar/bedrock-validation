@@ -6,14 +6,14 @@ module.exports = function(types, alternates) {
     title: 'Object Type',
     description: 'A set of terms, CURIEs, or URLs specifying the type of ' +
       'the object.',
-    type: []
+    anyOf: []
   };
 
   types = Array.isArray(types) ? types : [types];
 
   // allow single object
   if(types.length === 1) {
-    schema.type.push({
+    schema.anyOf.push({
       type: 'string',
       enum: types,
       errors: {
@@ -24,9 +24,9 @@ module.exports = function(types, alternates) {
   }
 
   // allow array combination of all types
-  schema.type.push({
+  schema.anyOf.push({
     type: 'array',
-    minItems: types.length,
+    // minItems: types.length,
     uniqueItems: true,
     items: {
       type: 'string',
@@ -64,7 +64,7 @@ module.exports = function(types, alternates) {
           enum: types
         });
       }
-      schema.type.push(s);
+      schema.anyOf.push(s);
     }
   }
 
