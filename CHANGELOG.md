@@ -1,5 +1,8 @@
 # bedrock-validation ChangeLog
 
+## Fixed - 2018-09-17
+- Invalid `jsonldType` schema.
+
 ## 3.1.1 - 2018-09-13
 
 ### Fixed
