@@ -52,7 +52,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid comments', function() {
       const small = validation.validate('comment', '1');
-      small.errors.should.be.empty;
+      should.not.exist(small.error);
       small.valid.should.be.true;
       const tmp = '12345678901234567890123456789012345678901234567890';
       const max = schema.maxLength / tmp.length;
@@ -85,7 +85,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid emails', function() {
       const small = validation.validate('email', 'a@b.io');
-      small.errors.should.be.empty;
+      should.not.exist(small.error);
       small.valid.should.be.true;
     });
     it('should accept normal non-letter symbols', function() {

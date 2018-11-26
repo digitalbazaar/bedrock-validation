@@ -5,19 +5,17 @@ const bedrock = require('bedrock');
 const jsonPatch = require('./jsonPatch');
 
 const schema = {
-  required: true,
+  required: ['patch', 'sequence', 'target'],
   title: 'Sequence-based JSON Patch',
   type: 'object',
   properties: {
     target: {
       type: 'string',
-      required: true
     },
     // FIXME: also support `frame` property later
     patch: jsonPatch(),
     sequence: {
       type: 'integer',
-      required: true,
       minimum: 0,
       maximum: Number.MAX_SAFE_INTEGER
     }
