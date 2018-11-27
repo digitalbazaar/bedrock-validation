@@ -1,8 +1,14 @@
 # bedrock-validation ChangeLog
 
+## 4.0.0 - TBD
+
+### Changed
+- Remove `async` module dependency.
+- Return value is {valid: <bool>, error: <error>}
+
 ## 3.1.2 - 2018-09-17
 
-## Fixed
+### Fixed
 - Invalid `jsonldType` schema.
 
 ## 3.1.1 - 2018-09-13

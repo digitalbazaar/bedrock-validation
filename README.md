@@ -18,7 +18,7 @@ npm install bedrock-validation
 
 ```js
 var bedrock = require('bedrock');
-var validate = require('bedrock-validation').validate;
+var {validate} = require('bedrock-validation');
 
 // load schemas from '/foo'
 bedrock.config.validation.schema.paths.push('/foo');
@@ -89,8 +89,14 @@ to validate data using a schema that wasn't necessarily registered via
 the configuration system. The `schema` must be a [JSON schema][] instance. The
 return value will contain the result of the validation. If a `callback` is
 given, it will be called once the validation operation completes. If an
-error occurred (including a validation error), it will be passed as the
-first parameter of the `callback`.
+error occurred it will be passed in the second parameter of the `callback`.
+The synchronous and callback return value are the same:
+```js
+{
+  valid: <boolean>,
+  error: <error> // only present when valid === false
+}
+```
 
 
 [bedrock]: https://github.com/digitalbazaar/bedrock
