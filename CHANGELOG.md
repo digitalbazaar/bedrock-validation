@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 4.0.0 - TBD
+## 4.0.0 - 2018-11-28
 
 ### Changed
 - Remove `async` module dependency.
