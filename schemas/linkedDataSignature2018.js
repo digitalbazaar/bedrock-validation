@@ -17,7 +17,7 @@ const signature = {
     type: {
       title: 'Linked Data Signature Type',
       type: 'string',
-      enum: ['Ed25519Signature2018']
+      enum: ['Ed25519Signature2018', 'RsaSignature2018']
     },
     creator: identifier(),
     created: w3cDateTime(),
