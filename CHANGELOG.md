@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 4.0.1 - 2018-12-17
+
+### Fixed
+- Add missing RsaSignature2018 type in LD signature schema.
+
 ## 4.0.0 - 2018-11-28
 
 ### Changed
