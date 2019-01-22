@@ -6,11 +6,11 @@
 const w3cDateTime = require('./w3cDateTime');
 const identifier = require('./identifier');
 
-const signature = {
+const baseSignature = {
   title: 'Linked Data Signature',
   description: 'A Linked Data digital signature.',
   // NOTE: id is not required
-  required: ['type', 'creator', 'created', 'jws'],
+  required: ['type', 'created', 'jws'],
   type: 'object',
   properties: {
     id: identifier(),
@@ -27,7 +27,23 @@ const signature = {
         'algorithm.',
       type: 'string'
     },
+    verificationMethod: identifier(),
   },
+};
+
+const signature = {
+  allOf: [
+    baseSignature, {
+      // only one of `creator` or `verificationMethod`
+      anyOf: [{
+        required: ['creator'],
+        not: {required: ['verificationMethod']},
+      }, {
+        required: ['verificationMethod'],
+        not: {required: ['creator']},
+      }]
+    }
+  ]
 };
 
 const schema = {
