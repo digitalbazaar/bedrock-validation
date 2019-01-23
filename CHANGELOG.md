@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 4.1.0 - 2019-01-23
+
+### Added
+- Support verificationMethod in linkdedDataSignature2018.
+
 ## 4.0.1 - 2018-12-17
 
 ### Fixed
