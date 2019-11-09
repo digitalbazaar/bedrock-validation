@@ -1,5 +1,7 @@
 # bedrock-validation ChangeLog
 
+## 4.2.0 - 2019-11-08
+
 ### Changed
 - Update dependencies.
 
