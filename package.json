@@ -24,7 +24,7 @@
     "ajv": "^6.0.0"
   },
   "peerDependencies": {
-    "bedrock": "^1.0.0"
+    "bedrock": "1.0.0 - 3.x"
   },
   "directories": {
     "lib": "./lib"

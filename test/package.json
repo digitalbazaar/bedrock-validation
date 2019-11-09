@@ -23,9 +23,8 @@
   },
   "homepage": "https://github.com/digitalbazaar/bedrock-validation",
   "dependencies": {
-    "async": "^1.4.2",
-    "bedrock": "^1.0.0",
-    "bedrock-test": "^2.0.0",
+    "bedrock": "^3.0.0",
+    "bedrock-test": "^4.0.0",
     "bedrock-validation": "file:.."
   }
 }
