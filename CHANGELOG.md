@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 4.3.0 - 2020-03-30
+
+### Changed
+- Increase character length of email domain labels per RFC 1034.
+
 ## 4.2.0 - 2019-11-08
 
 ### Changed
