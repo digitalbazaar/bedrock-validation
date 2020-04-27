@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 4.4.0 - 2020-04-27
+
+### Added
+- Allow context in `DID Login` validator to be array with single context string.
+
 ## 4.3.0 - 2020-03-30
 
 ### Changed
