@@ -15,9 +15,13 @@ module.exports = function(context, extend) {
     }, {
       type: 'object'
       // FIXME: improve context object validator
+    }, {
+      type: 'array',
+      // items added below if context param truthy
     }];
     if(context) {
       schema.anyOf[0].enum = [context];
+      schema.anyOf[2].items = [{const: context}];
     }
   } else {
     Object.assign(schema, {
