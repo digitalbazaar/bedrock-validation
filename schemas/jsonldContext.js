@@ -22,6 +22,7 @@ module.exports = function(context, extend) {
     if(context) {
       schema.anyOf[0].enum = [context];
       schema.anyOf[2].items = [{const: context}];
+      schema.anyOf[2].additionalItems = false;
     }
   } else {
     Object.assign(schema, {
