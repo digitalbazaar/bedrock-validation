@@ -4,7 +4,7 @@
   "description": "Bedrock validation",
   "main": "./lib",
   "scripts": {
-    "lint": "eslint lib test"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "lib": "./lib"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-digitalbazaar": "^2.3.0"
+    "eslint": "^7.13.0",
+    "eslint-config-digitalbazaar": "^2.6.1"
   }
 }
