@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2018 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
  */
 module.exports = function(types, alternates) {
   const schema = {
