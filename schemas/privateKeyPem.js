@@ -7,6 +7,7 @@ const schema = {
   title: 'Private Key PEM',
   description: 'A cryptographic Private Key in PEM format.',
   type: 'string',
+  // eslint-disable-next-line max-len
   pattern: '^\\s*-----BEGIN RSA PRIVATE KEY-----[a-zA-Z0-9/+=\\s]*-----END RSA PRIVATE KEY-----\\s*$',
   errors: {
     invalid: 'The private key is not formatted correctly.',

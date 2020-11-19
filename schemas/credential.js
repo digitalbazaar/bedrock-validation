@@ -23,11 +23,10 @@ const schema = {
     issuer: schemas.identifier(),
     issued: schemas.w3cDateTime(),
     claim: {
-      required: true,
+      required: ['id'],
       properties: {
         id: schemas.identifier()
       },
-      required: ['id']
     }
   },
   required: ['issuer', 'issued', 'claim']
