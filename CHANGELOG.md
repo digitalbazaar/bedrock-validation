@@ -1,5 +1,11 @@
 # bedrock-validation ChangeLog
 
+## 4.5.0 - TBD
+
+### Added
+- Implement a new ES6 Map based cache for AJV schemas. This provides a
+  significant peformance improvement over the default AJV caching mechanism.
+
 ## 4.4.0 - 2020-04-27
 
 ### Added
