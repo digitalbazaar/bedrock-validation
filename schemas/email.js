@@ -10,7 +10,7 @@ const schema = {
   description: 'An email address.',
   type: 'string',
   // eslint-disable-next-line max-len
-  pattern: '^[-a-zA-Z0-9~!$%^&*_=+}{\\\'?]+(\\.[-a-zA-Z0-9~!$%^&*_=+}{\\\'?]+)*@(((([a-zA-Z0-9]{1}[a-zA-Z0-9\\-]{0,63}[a-zA-Z0-9]{1})|[a-zA-Z])\\.)+[a-zA-Z]{2,63})$',
+  pattern: '^[-a-z0-9~!$%^&*_=+}{\\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\\'?]+)*@(((([a-z0-9]{1}[a-z0-9\\-]{0,63}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,63})$',
   minLength: 1,
   maxLength: 100,
   errors: {
