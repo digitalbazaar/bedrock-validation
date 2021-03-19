@@ -93,10 +93,10 @@ describe('bedrock-validation', function() {
         'email', 'abc123~!$%^&*_=+-@example.org');
       result.valid.should.be.true;
     });
-    it('should accept emails with uppercase chars', function() {
+    it('should not accept emails with uppercase chars', function() {
       const schema = validation.getSchema('email');
       const result = validation.validateInstance('aBC@DEF.com', schema);
-      result.valid.should.be.true;
+      result.valid.should.be.false;
     });
     it('should reject emails with uppercase chars', function() {
       const schema = validation.schemas.email({}, {lowerCaseOnly: true});
