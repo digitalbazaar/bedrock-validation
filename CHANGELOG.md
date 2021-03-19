@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 5.0.0 - 2021-03-TBD
+
+### Changed
+- **BREAKING** Email pattern no longer supports uppercase chars.
+
 ## 4.5.0 - 2020-11-19
 
 ### Added
