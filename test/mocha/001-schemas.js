@@ -320,6 +320,77 @@ describe('bedrock-validation', function() {
     });
   });
 
+  describe('linkedDataSignature2020', function() {
+    const schema = validation.getSchema('linkedDataSignature2020');
+
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+
+    it('should validate a LinkedDataSignature2020 signature', function() {
+      const signature = {
+        type: 'Ed25519Signature2020',
+        created: '2021-01-01T19:23:24Z',
+        verificationMethod: 'https://example.edu/issuers/565049#' +
+          'z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
+        proofPurpose: 'assertionMethod',
+        proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
+          'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
+      };
+      const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.true;
+    });
+
+    it('should NOT validate a signature w/missing type', function() {
+      const signature = {
+        created: '2021-01-01T19:23:24Z',
+        verificationMethod: 'https://example.edu/issuers/565049#' +
+          'z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
+        proofPurpose: 'assertionMethod',
+        proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
+          'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
+      };
+      const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a signature with missing created', function() {
+      const signature = {
+        type: 'Ed25519Signature2020',
+        verificationMethod: 'https://example.edu/issuers/565049#' +
+          'z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
+        proofPurpose: 'assertionMethod',
+        proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
+          'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
+      };
+      const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    it('should NOT validate a with missing verificationMethod', function() {
+      const signature = {
+        type: 'Ed25519Signature2020',
+        proofPurpose: 'assertionMethod',
+        proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
+          'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
+      };
+      const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+
+    // eslint-disable-next-line max-len
+    it('should NOT validate a signature w/missing proofValue', function() {
+      const signature = {
+        type: 'Ed25519Signature2020',
+        verificationMethod: 'https://example.edu/issuers/565049#' +
+          'z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
+        proofPurpose: 'assertionMethod'
+      };
+      const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.false;
+    });
+  });
+
   // FIXME: This is a stub
   describe('credential', function() {
     const schema = validation.getSchema('credential');
