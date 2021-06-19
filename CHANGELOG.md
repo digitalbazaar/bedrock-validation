@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 5.1.0 - 2021-xx-xx
+
+### Added
+- Schema `linkedDataSignature2020`.
+
 ## 5.0.0 - 2021-03-19
 
 ### Changed
@@ -29,7 +34,7 @@
 ## 4.1.0 - 2019-01-23
 
 ### Added
-- Support verificationMethod in linkdedDataSignature2018.
+- Support verificationMethod in linkedDataSignature2018.
 
 ## 4.0.1 - 2018-12-17
 
