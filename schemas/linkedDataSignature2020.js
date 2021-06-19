@@ -19,7 +19,6 @@ const baseSignature = {
       type: 'string',
       enum: ['Ed25519Signature2020']
     },
-    creator: identifier(),
     created: w3cDateTime(),
     proofValue: {
       title: 'Digital Signature Value',
