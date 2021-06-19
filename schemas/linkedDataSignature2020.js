@@ -7,23 +7,23 @@ const w3cDateTime = require('./w3cDateTime');
 const identifier = require('./identifier');
 
 const signature = {
-  title: 'Linked Data Signature',
-  description: 'A Linked Data digital signature.',
+  title: 'An Ed25519 Linked Data Signature',
+  description: 'An Ed25519 Linked Data Signature (2020 cryptosuite).',
   // NOTE: id is not required
   required: ['type', 'created', 'verificationMethod', 'proofValue'],
   type: 'object',
   properties: {
     id: identifier(),
     type: {
-      title: 'Linked Data Signature Type',
+      title: 'Ed25519 Signature Type for 2020 Cryptosuite',
       type: 'string',
       enum: ['Ed25519Signature2020']
     },
     created: w3cDateTime(),
     proofValue: {
       title: 'Digital Signature Value',
-      description: 'The multibase encoding of the result of the signature ' +
-        'algorithm.',
+      description: 'The multibase base58-btc encoding of the result of ' +
+        'the signature algorithm.',
       type: 'string'
     },
     verificationMethod: identifier(),
@@ -31,7 +31,7 @@ const signature = {
 };
 
 const schema = {
-  title: 'Linked Data Signatures',
+  title: 'Ed25519 Linked Data Signatures',
   oneOf: [{
     type: 'array',
     items: signature,
