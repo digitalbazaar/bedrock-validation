@@ -1,9 +1,9 @@
 # bedrock-validation ChangeLog
 
-## 5.1.0 - 2021-xx-xx
+## 5.1.0 - 2021-06-30
 
 ### Added
-- Schema `linkedDataSignature2020`.
+- Support `linkedDataSignature2020` schema generator.
 
 ## 5.0.0 - 2021-03-19
 
