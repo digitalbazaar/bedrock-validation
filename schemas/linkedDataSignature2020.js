@@ -7,7 +7,7 @@ const w3cDateTime = require('./w3cDateTime');
 const identifier = require('./identifier');
 
 const signature = {
-  title: 'An Ed25519 Linked Data Signature',
+  title: 'Ed25519Signature2020',
   description: 'An Ed25519 Linked Data Signature (2020 cryptosuite).',
   // NOTE: id is not required
   required: ['type', 'created', 'verificationMethod', 'proofValue'],
