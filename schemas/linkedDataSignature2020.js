@@ -31,7 +31,7 @@ const signature = {
 };
 
 const schema = {
-  title: 'Ed25519 Linked Data Signatures',
+  title: 'One or more Ed25519 signatures (2020 cryptosuite)',
   oneOf: [{
     type: 'array',
     items: signature,
