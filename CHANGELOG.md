@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.2.0 - 2021-07-xx
+## 5.2.0 - 2021-07-23
 
 ### Changed
 - Update peer dependencies; use bedrock@4.
