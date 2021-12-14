@@ -6,8 +6,8 @@
 const expect = global.chai.expect;
 const validation = require('bedrock-validation');
 const validate = validation.validate;
+const mock = require('./mock.data.js');
 
-// FIXME: add more tests, test for proper errors
 describe('bedrock-validation', function() {
   describe('invalid schema specified', function() {
     describe('synchronous mode', function() {
@@ -68,6 +68,14 @@ describe('bedrock-validation', function() {
         'comment', '-a-zA-Z0-9~!@#$%^&*()_=+\\|{}[];:\'"<>,./? ');
       result.valid.should.be.true;
     });
+    it('should validate with name as an object', function() {
+      const name = {
+        body: 'comment',
+        query: 'comment'
+      };
+      const result = validation.validate(name, '1');
+      result.valid.should.be.true;
+    });
     it('should throw an UnknownSchema error when schema does not exist',
       function() {
         let result;
@@ -83,6 +91,268 @@ describe('bedrock-validation', function() {
         should.not.exist(result);
         err.name.should.equal('UnknownSchema');
       });
+    it('should return middleware with a ValidationError due to invalid body',
+      function() {
+        const req = {
+          body: ''
+        };
+        const res = {};
+        const next = function(err) {
+          should.exist(err);
+          err.name.should.equal('ValidationError');
+        };
+
+        const result = validation.validate('comment');
+        result(req, res, next);
+      });
+    it('should call middleware with a ValidationError due to invalid query',
+      function() {
+        const req = {
+          query: ''
+        };
+        const res = {};
+        const next = function(err) {
+          should.exist(err);
+          err.name.should.equal('ValidationError');
+        };
+
+        const result = validation.validate({
+          query: 'comment'});
+        result(req, res, next);
+      });
+    it('should not return a ValidationError in middleware when valid',
+      function() {
+        const req = {
+          body: 'comment'
+        };
+        const res = {};
+        const next = function(err) {
+          should.not.exist(err);
+        };
+
+        const result = validation.validate('comment');
+        result(req, res, next);
+      });
+    it('should accept valid comment with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/comment')(extend);
+      const result = validation.validateInstance('test comment', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('description', function() {
+    const schema = validation.getSchema('description');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid description', function() {
+      const result = validation.validate('description', 'test description');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid description', function() {
+      const result = validation.validate('description', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid description with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/description')(extend);
+      const result = validation.validateInstance('test description', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('identifier', function() {
+    const schema = validation.getSchema('identifier');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid identifier', function() {
+      const result = validation.validate('identifier', '1234');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid identifier', function() {
+      const result = validation.validate('identifier', '');
+      result.valid.should.be.false;
+    });
+    it('should accept valid identifier with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/identifier')(extend);
+      const result = validation.validateInstance('1234', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('label', function() {
+    const schema = validation.getSchema('label');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid label', function() {
+      const result = validation.validate('label', 'test label');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid label', function() {
+      const result = validation.validate('label', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid label with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/label')(extend);
+      const result = validation.validateInstance('test label', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('title', function() {
+    const schema = validation.getSchema('title');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid title', function() {
+      const result = validation.validate('title', 'Test Title');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid title', function() {
+      const result = validation.validate('title', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid title with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/title')(extend);
+      const result = validation.validateInstance('Test Title', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('url', function() {
+    const schema = validation.getSchema('url');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid url', function() {
+      const result = validation.validate('url', 'http://foo.com/v2');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid url', function() {
+      const result = validation.validate('url', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid url with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/url')(extend);
+      const result = validation.validateInstance('http://foo.com/v2', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('w3cDateTime', function() {
+    const schema = validation.getSchema('w3cDateTime');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid w3cDateTime', function() {
+      const result = validation.validate('w3cDateTime', '2016-01-01T01:00:00Z');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid w3cDateTime', function() {
+      const result = validation.validate('w3cDateTime', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid w3cDateTime with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/w3cDateTime')(extend);
+      const result = validation.validateInstance(
+        '2016-01-01T01:00:00Z', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('personName', function() {
+    const schema = validation.getSchema('personName');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid personName', function() {
+      const result = validation.validate('personName', 'Name');
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid personName', function() {
+      const result = validation.validate('personName', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid personName with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/personName')(extend);
+      const result = validation.validateInstance('Name', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('privateKeyPem', function() {
+    const schema = validation.getSchema('privateKeyPem');
+    const privateKey = mock.keys.alpha.privateKey;
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid privateKeyPem', function() {
+
+      const result = validation.validate('privateKeyPem', privateKey);
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid privateKeyPem', function() {
+      const result = validation.validate('privateKeyPem', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid privateKeyPem with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/privateKeyPem')(extend);
+      const result = validation.validateInstance(privateKey, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('publicKeyPem', function() {
+    const schema = validation.getSchema('publicKeyPem');
+    const privateKey = mock.keys.alpha.publicKey;
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accecpt valid publicKeyPem', function() {
+
+      const result = validation.validate('publicKeyPem', privateKey);
+      result.valid.should.be.true;
+    });
+    it('should reject an invalid publicKeyPem', function() {
+      const result = validation.validate('publicKeyPem', {});
+      result.valid.should.be.false;
+    });
+    it('should accept valid privateKeyPem with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/publicKeyPem')(extend);
+      const result = validation.validateInstance(privateKey, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
   });
 
   describe('email', function() {
@@ -103,6 +373,13 @@ describe('bedrock-validation', function() {
       should.not.exist(small.error);
       small.valid.should.be.true;
     });
+    it('should accept valid emails with callback', function() {
+      const callback = function(err, result) {
+        should.not.exist(err);
+        result.valid.should.be.true;
+      };
+      validation.validate('email', 'a@b.io', callback);
+    });
     it('should accept normal non-letter symbols', function() {
       const result = validation.validate(
         'email', 'abc123~!$%^&*_=+-@example.org');
@@ -118,6 +395,15 @@ describe('bedrock-validation', function() {
       const result = validation.validateInstance('aBC@DEF.com', schema);
       result.valid.should.be.false;
     });
+    it('should reject emails with uppercase chars with callback',
+      function() {
+        const schema = validation.schemas.email({}, {lowerCaseOnly: true});
+        const callback = function(err, result) {
+          should.not.exist(err);
+          result.valid.should.be.false;
+        };
+        validation.validateInstance('aBC@DEF.com', schema, callback);
+      });
   });
 
   describe('nonce', function() {
@@ -158,6 +444,14 @@ describe('bedrock-validation', function() {
     it('should reject invalid characters', function() {
       const result = validation.validate('nonce', '|||||||||');
       result.valid.should.be.false;
+    });
+    it('should accept valid nonces with an extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/nonce')(extend);
+      const result = validation.validateInstance('12345678', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
     });
   });
 
@@ -204,6 +498,28 @@ describe('bedrock-validation', function() {
       result = validation.validate('slug', '-hyphenstart');
       result.valid.should.be.false;
     });
+    it('should mask value when error occurs', function() {
+      schema.errors.mask = true;
+      const result = validation.validateInstance('sl', schema);
+      result.valid.should.be.false;
+      result.error.details.errors[0].details.value.should.equal('***MASKED***');
+    });
+    it('should mask value when error occurs with a custom mask',
+      function() {
+        schema.errors.mask = 'custom mask value';
+        const result = validation.validateInstance('sl', schema);
+        result.valid.should.be.false;
+        result.error.details.errors[0].details.value.should
+          .equal('custom mask value');
+      });
+    it('should accept valid slug with extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/slug')(extend);
+      const result = validation.validateInstance('a23', schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
   });
 
   describe('jsonldContext', function() {
@@ -215,6 +531,14 @@ describe('bedrock-validation', function() {
       // eslint-disable-next-line max-len
       const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')('http://foo.com/v1');
       const result = validation.validateInstance('http://foo.com/v1', schema);
+      result.valid.should.be.true;
+    });
+    it('should accept a URL with an extend', function() {
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')('http://foo.com/v1', extend);
+      const result = validation.validateInstance('http://foo.com/v1', schema);
+      schema.name.should.equal('test');
       result.valid.should.be.true;
     });
     it('should reject the wrong a URL', function() {
@@ -242,6 +566,95 @@ describe('bedrock-validation', function() {
       const result = validation.validateInstance(
         ['http://foo.com/v1', 'http://wrong.com/v1'], schema);
       result.valid.should.be.false;
+    });
+    it('should accept an array of objects', function() {
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')([
+        {url: 'http://foo.com/v1'},
+        {url: 'http://bar.com/v1'}
+      ]);
+      const result = validation.validateInstance([
+        {url: 'http://foo.com/v1'},
+        {url: 'http://bar.com/v1'}
+      ], schema);
+      result.valid.should.be.true;
+    });
+  });
+
+  describe('jsonldType', function() {
+    const schema = validation.getSchema('jsonldType');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accept a string', function() {
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')('Group');
+      const type = 'Group';
+      const result = validation.validateInstance(type, schema);
+      result.valid.should.be.true;
+    });
+    it('should accept a string with alternates', function() {
+      const alternate = 1;
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')('Group', alternate);
+      const type = 'Group';
+      const result = validation.validateInstance(type, schema);
+      schema.anyOf.length.should.equal(4);
+      result.valid.should.be.true;
+    });
+    it('should reject the wrong string', function() {
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')('Group');
+      const type = 'Wrong';
+      const result = validation.validateInstance(type, schema);
+      result.valid.should.be.false;
+    });
+    it('should accept an array of strings', function() {
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')(['Group', 'Name']);
+      const type = ['Group', 'Name'];
+      const result = validation.validateInstance(type, schema);
+      result.valid.should.be.true;
+    });
+    it('should reject the wrong array of strings', function() {
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')(['Group', 'Name']);
+      const type = ['Group', 'Wrong'];
+      const result = validation.validateInstance(type, schema);
+      result.valid.should.be.false;
+    });
+  });
+
+  describe('graphSignature', function() {
+    const schema = validation.getSchema('graphSignature');
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should validate a GraphSignature2012 signature', function() {
+      const signature = {
+        type: 'GraphSignature2012',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        // eslint-disable-next-line max-len
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.true;
+    });
+    it('should validate a GraphSignature2012 with an extend', function() {
+      const signature = {
+        type: 'GraphSignature2012',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        // eslint-disable-next-line max-len
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/graphSignature')(extend);
+      const result = validation.validateInstance(signature, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
     });
   });
 
@@ -273,6 +686,22 @@ describe('bedrock-validation', function() {
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validation.validateInstance(signature, schema);
+      result.valid.should.be.true;
+    });
+
+    it('should validate a LinkedDataSignature2015 with an extend', function() {
+      const signature = {
+        type: 'LinkedDataSignature2015',
+        created: '2016-01-01T01:00:00Z',
+        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
+        // eslint-disable-next-line max-len
+        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
+      };
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/linkedDataSignature')(extend);
+      const result = validation.validateInstance(signature, schema);
+      schema.name.should.equal('test');
       result.valid.should.be.true;
     });
 
@@ -406,11 +835,36 @@ describe('bedrock-validation', function() {
     });
   });
 
-  // FIXME: This is a stub
   describe('credential', function() {
     const schema = validation.getSchema('credential');
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
+    });
+    it('should validate a credential', function() {
+      const credential = {
+        issuer: 'test',
+        issued: '1997-07-16T19:20:30',
+        claim: {
+          id: '1234'
+        }
+      };
+      const result = validation.validateInstance(credential, schema);
+      result.valid.should.be.true;
+    });
+    it('should validate a credential with an extend', function() {
+      const credential = {
+        issuer: 'test',
+        issued: '2016-01-01T01:00:00Z',
+        claim: {
+          id: '1234'
+        }
+      };
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/credential')(extend);
+      const result = validation.validateInstance(credential, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
     });
   });
 
@@ -449,6 +903,17 @@ describe('bedrock-validation', function() {
       ];
       const result = validation.validateInstance(patch, schema);
       result.valid.should.be.false;
+    });
+    it('should validate a JSON patch with extend', function() {
+      const patch = [
+        {op: 'add', path: '/email', value: 'pdoe@example.com'}
+      ];
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonPatch')(extend);
+      const result = validation.validateInstance(patch, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
     });
   });
 
@@ -506,6 +971,22 @@ describe('bedrock-validation', function() {
       };
       const result = validation.validateInstance(doc, schema);
       result.valid.should.be.false;
+    });
+
+    it('should validate a sequenced JSON patch with extend', function() {
+      const doc = {
+        target: 'some-identifier',
+        patch: [
+          {op: 'add', path: '/email', value: 'pdoe@example.com'}
+        ],
+        sequence: 1
+      };
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/sequencedPatch')(extend);
+      const result = validation.validateInstance(doc, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
     });
   });
 });
