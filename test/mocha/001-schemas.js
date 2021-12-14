@@ -68,6 +68,21 @@ describe('bedrock-validation', function() {
         'comment', '-a-zA-Z0-9~!@#$%^&*()_=+\\|{}[];:\'"<>,./? ');
       result.valid.should.be.true;
     });
+    it('should throw an UnknownSchema error when schema does not exist',
+      function() {
+        let result;
+        let err;
+
+        try {
+          result = validation.validate('test');
+        } catch(e) {
+          err = e;
+        }
+
+        should.exist(err);
+        should.not.exist(result);
+        err.name.should.equal('UnknownSchema');
+      });
   });
 
   describe('email', function() {
