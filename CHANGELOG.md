@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.3.0 - TBD
+## 5.2.1 - TBD
 
 ### Fixed
 - Fix `api.validate` to throw error if schema does not exist instead of
