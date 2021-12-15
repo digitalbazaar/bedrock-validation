@@ -22,9 +22,9 @@ const schema = {
         'the GraphSignature2012 algorithm.',
       type: 'string'
     },
-    // NOTE: id is not required
-    required: ['type', 'creator', 'created', 'signatureValue']
   },
+  // NOTE: id is not required
+  required: ['type', 'creator', 'created', 'signatureValue'],
   additionalProperties: false
 };
 
