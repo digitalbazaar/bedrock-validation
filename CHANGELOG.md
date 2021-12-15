@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.3.0 - TBD
+## 5.2.2 - 2021-12-15
 
 ### Fixed
 - Fix bug in `graphSignature` schema causing it to be invalid.
