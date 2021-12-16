@@ -92,7 +92,7 @@ describe('bedrock-validation', function() {
         err.name.should.equal('UnknownSchema');
       });
     it('should return middleware with a ValidationError due to invalid body',
-      function() {
+      function(done) {
         const req = {
           body: ''
         };
@@ -100,13 +100,14 @@ describe('bedrock-validation', function() {
         const next = function(err) {
           should.exist(err);
           err.name.should.equal('ValidationError');
+          done();
         };
 
         const result = validation.validate('comment');
         result(req, res, next);
       });
     it('should call middleware with a ValidationError due to invalid query',
-      function() {
+      function(done) {
         const req = {
           query: ''
         };
@@ -114,6 +115,7 @@ describe('bedrock-validation', function() {
         const next = function(err) {
           should.exist(err);
           err.name.should.equal('ValidationError');
+          done();
         };
 
         const result = validation.validate({
@@ -121,13 +123,14 @@ describe('bedrock-validation', function() {
         result(req, res, next);
       });
     it('should not return a ValidationError in middleware when valid',
-      function() {
+      function(done) {
         const req = {
           body: 'comment'
         };
         const res = {};
         const next = function(err) {
           should.not.exist(err);
+          done();
         };
 
         const result = validation.validate('comment');
@@ -148,7 +151,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid description', function() {
+    it('should accept valid description', function() {
       const result = validation.validate('description', 'test description');
       result.valid.should.be.true;
     });
@@ -171,7 +174,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid identifier', function() {
+    it('should accept valid identifier', function() {
       const result = validation.validate('identifier', '1234');
       result.valid.should.be.true;
     });
@@ -194,7 +197,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid label', function() {
+    it('should accept valid label', function() {
       const result = validation.validate('label', 'test label');
       result.valid.should.be.true;
     });
@@ -217,7 +220,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid title', function() {
+    it('should accept valid title', function() {
       const result = validation.validate('title', 'Test Title');
       result.valid.should.be.true;
     });
@@ -240,7 +243,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid url', function() {
+    it('should accept valid url', function() {
       const result = validation.validate('url', 'http://foo.com/v2');
       result.valid.should.be.true;
     });
@@ -263,7 +266,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid w3cDateTime', function() {
+    it('should accept valid w3cDateTime', function() {
       const result = validation.validate('w3cDateTime', '2016-01-01T01:00:00Z');
       result.valid.should.be.true;
     });
@@ -287,7 +290,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid personName', function() {
+    it('should accept valid personName', function() {
       const result = validation.validate('personName', 'Name');
       result.valid.should.be.true;
     });
@@ -311,7 +314,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid privateKeyPem', function() {
+    it('should accept valid privateKeyPem', function() {
 
       const result = validation.validate('privateKeyPem', privateKey);
       result.valid.should.be.true;
@@ -336,7 +339,7 @@ describe('bedrock-validation', function() {
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
-    it('should accecpt valid publicKeyPem', function() {
+    it('should accept valid publicKeyPem', function() {
 
       const result = validation.validate('publicKeyPem', privateKey);
       result.valid.should.be.true;
