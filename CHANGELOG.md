@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 5.4.1 - 2022-02-xx
+
+### Fixed
+- Ensure `title` is set on compiled function.
+
 ## 5.4.0 - 2022-02-10
 
 ### Added
