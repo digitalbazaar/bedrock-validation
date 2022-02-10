@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.4.0 - 2022-02-xx
+## 5.4.0 - 2022-02-10
 
 ### Added
 - Add `compile()` function to pre-compile a schema and return a
