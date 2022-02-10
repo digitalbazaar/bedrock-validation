@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.3.0 - 2022-02-xx
+## 5.3.0 - 2022-02-10
 
 ### Changed
 - Pre-compile schemas that are used in middlewares to prevent
