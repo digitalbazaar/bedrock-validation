@@ -33,11 +33,16 @@ describe('bedrock-validation', function() {
 
   describe('comment', function() {
     const schema = validation.getSchema('comment');
+    const validate = validation.compile(schema);
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should reject empty comments', function() {
       const result = validation.validate('comment', '');
+      result.valid.should.be.false;
+    });
+    it('should reject empty comments w/compiled schema', function() {
+      const result = validate('');
       result.valid.should.be.false;
     });
     it('should reject comments that are too long', function() {
@@ -61,6 +66,19 @@ describe('bedrock-validation', function() {
         str += tmp;
       }
       const large = validation.validate('comment', str);
+      large.valid.should.be.true;
+    });
+    it('should accept valid comments w/compiled schema', function() {
+      const small = validate('1');
+      should.not.exist(small.error);
+      small.valid.should.be.true;
+      const tmp = '12345678901234567890123456789012345678901234567890';
+      const max = schema.maxLength / tmp.length;
+      let str = '';
+      for(let i = 0; i < max; ++i) {
+        str += tmp;
+      }
+      const large = validate(str);
       large.valid.should.be.true;
     });
     it('should accept normal non-letter symbols', function() {
@@ -460,6 +478,7 @@ describe('bedrock-validation', function() {
 
   describe('slug', function() {
     const schema = validation.getSchema('slug');
+    const validate = validation.compile(schema);
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
@@ -507,14 +526,27 @@ describe('bedrock-validation', function() {
       result.valid.should.be.false;
       result.error.details.errors[0].details.value.should.equal('***MASKED***');
     });
-    it('should mask value when error occurs with a custom mask',
-      function() {
-        schema.errors.mask = 'custom mask value';
-        const result = validation.validateInstance('sl', schema);
-        result.valid.should.be.false;
-        result.error.details.errors[0].details.value.should
-          .equal('custom mask value');
-      });
+    it('should mask value when error occurs w/compiled schema', function() {
+      schema.errors.mask = true;
+      const result = validate('sl');
+      result.valid.should.be.false;
+      result.error.details.errors[0].details.value.should.equal('***MASKED***');
+    });
+    it('should mask value when error occurs with a custom mask', function() {
+      schema.errors.mask = 'custom mask value';
+      const result = validation.validateInstance('sl', schema);
+      result.valid.should.be.false;
+      result.error.details.errors[0].details.value.should
+        .equal('custom mask value');
+    });
+    it('should mask value when error occurs with a custom mask ' +
+      'w/compiled schema', function() {
+      schema.errors.mask = 'custom mask value';
+      const result = validate('sl');
+      result.valid.should.be.false;
+      result.error.details.errors[0].details.value.should
+        .equal('custom mask value');
+    });
     it('should accept valid slug with extend', function() {
       const extend = {name: 'test'};
       // eslint-disable-next-line max-len
@@ -580,6 +612,19 @@ describe('bedrock-validation', function() {
         {url: 'http://foo.com/v1'},
         {url: 'http://bar.com/v1'}
       ], schema);
+      result.valid.should.be.true;
+    });
+    it('should accept an array of objects w/compiled schema', function() {
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')([
+        {url: 'http://foo.com/v1'},
+        {url: 'http://bar.com/v1'}
+      ]);
+      const validate = validation.compile(schema);
+      const result = validate([
+        {url: 'http://foo.com/v1'},
+        {url: 'http://bar.com/v1'}
+      ]);
       result.valid.should.be.true;
     });
   });
@@ -988,6 +1033,24 @@ describe('bedrock-validation', function() {
       // eslint-disable-next-line max-len
       const schema = require('../node_modules/bedrock-validation/schemas/sequencedPatch')(extend);
       const result = validation.validateInstance(doc, schema);
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+
+    it('should validate a sequenced JSON patch with extend ' +
+      'and w/compiled schema', function() {
+      const doc = {
+        target: 'some-identifier',
+        patch: [
+          {op: 'add', path: '/email', value: 'pdoe@example.com'}
+        ],
+        sequence: 1
+      };
+      const extend = {name: 'test'};
+      // eslint-disable-next-line max-len
+      const schema = require('../node_modules/bedrock-validation/schemas/sequencedPatch')(extend);
+      const validate = validation.compile(schema);
+      const result = validate(doc);
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
