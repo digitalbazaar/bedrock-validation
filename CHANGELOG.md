@@ -1,5 +1,13 @@
 # bedrock-validation ChangeLog
 
+## 5.5.0 - 2022-02-xx
+
+### Added
+- Add `createValidateMiddleware` to create a more modern validate express-style
+  middleware. This function has more clear name, simpler parameters, and
+  ensures that the schemas used are compiled once. It requires schemas to
+  be passed directly, a string identifying a schema may not be used.
+
 ## 5.4.1 - 2022-02-10
 
 ### Fixed

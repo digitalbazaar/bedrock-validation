@@ -109,51 +109,118 @@ describe('bedrock-validation', function() {
         should.not.exist(result);
         err.name.should.equal('UnknownSchema');
       });
-    it('should return middleware with a ValidationError due to invalid body',
-      function(done) {
-        const req = {
-          body: ''
-        };
-        const res = {};
-        const next = function(err) {
-          should.exist(err);
-          err.name.should.equal('ValidationError');
-          done();
-        };
+    it('should raise a body ValidationError via legacy middleware', done => {
+      const req = {
+        body: ''
+      };
+      const res = {};
+      const next = function(err) {
+        should.exist(err);
+        err.name.should.equal('ValidationError');
+        done();
+      };
 
-        const result = validation.validate('comment');
-        result(req, res, next);
-      });
-    it('should call middleware with a ValidationError due to invalid query',
-      function(done) {
-        const req = {
-          query: ''
-        };
-        const res = {};
-        const next = function(err) {
-          should.exist(err);
-          err.name.should.equal('ValidationError');
-          done();
-        };
+      const middleware = validation.validate('comment');
+      middleware(req, res, next);
+    });
+    it('should raise a query ValidationError via legacy middleware', done => {
+      const req = {
+        query: ''
+      };
+      const res = {};
+      const next = function(err) {
+        should.exist(err);
+        err.name.should.equal('ValidationError');
+        done();
+      };
 
-        const result = validation.validate({
-          query: 'comment'});
-        result(req, res, next);
-      });
-    it('should not return a ValidationError in middleware when valid',
-      function(done) {
-        const req = {
-          body: 'comment'
-        };
-        const res = {};
-        const next = function(err) {
-          should.not.exist(err);
-          done();
-        };
+      const middleware = validation.validate({query: 'comment'});
+      middleware(req, res, next);
+    });
+    it('should pass body validation via legacy middleware', done => {
+      const req = {
+        body: 'comment'
+      };
+      const res = {};
+      const next = function(err) {
+        should.not.exist(err);
+        done();
+      };
 
-        const result = validation.validate('comment');
-        result(req, res, next);
-      });
+      const middleware = validation.validate('comment');
+      middleware(req, res, next);
+    });
+    it('should pass query validation via legacy middleware', done => {
+      const req = {
+        query: 'comment'
+      };
+      const res = {};
+      const next = function(err) {
+        should.not.exist(err);
+        done();
+      };
+
+      const middleware = validation.validate({query: 'comment'});
+      middleware(req, res, next);
+    });
+    it('should raise a body ValidationError via middleware', done => {
+      const req = {
+        body: ''
+      };
+      const res = {};
+      const next = function(err) {
+        should.exist(err);
+        err.name.should.equal('ValidationError');
+        done();
+      };
+
+      const bodySchema = validation.getSchema('comment');
+      const middleware = validation.createValidateMiddleware({bodySchema});
+      middleware(req, res, next);
+    });
+    it('should raise a query ValidationError via middleware', done => {
+      const req = {
+        query: ''
+      };
+      const res = {};
+      const next = function(err) {
+        should.exist(err);
+        err.name.should.equal('ValidationError');
+        done();
+      };
+
+      const querySchema = validation.getSchema('comment');
+      const middleware = validation.createValidateMiddleware({querySchema});
+      middleware(req, res, next);
+    });
+    it('should pass body validation via middleware', done => {
+      const req = {
+        body: 'comment'
+      };
+      const res = {};
+      const next = function(err) {
+        should.not.exist(err);
+        done();
+      };
+
+      const bodySchema = validation.getSchema('comment');
+      const middleware = validation.createValidateMiddleware({bodySchema});
+      middleware(req, res, next);
+    });
+    it('should pass query validation via middleware', done => {
+      const req = {
+        query: 'comment'
+      };
+      const res = {};
+      const next = function(err) {
+        should.not.exist(err);
+        done();
+      };
+
+      const querySchema = validation.getSchema('comment');
+      const middleware = validation.createValidateMiddleware({querySchema});
+      middleware(req, res, next);
+    });
     it('should accept valid comment with extend', function() {
       const extend = {name: 'test'};
       // eslint-disable-next-line max-len
