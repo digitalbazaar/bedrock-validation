@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.5.0 - 2022-02-xx
+## 5.5.0 - 2022-02-17
 
 ### Added
 - Add `createValidateMiddleware` to create a more modern validate express-style
