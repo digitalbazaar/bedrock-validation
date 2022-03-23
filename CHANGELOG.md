@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.6.0 - 2022-03-xx
+## 5.6.0 - 2022-03-23
 
 ### Changed
 - Update peer deps:
