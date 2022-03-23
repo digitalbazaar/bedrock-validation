@@ -1,40 +1,37 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
-
-const schemas = {};
-schemas.identifier = require('./identifier');
-schemas.jsonldContext = require('./jsonldContext');
-schemas.url = require('./url');
-schemas.w3cDateTime = require('./w3cDateTime');
+import * as bedrock from 'bedrock';
+import identifier from './identifier.js';
+import jsonldContext from './jsonldContext.js';
+import w3cDateTime from './w3cDateTime.js';
 
 // TODO: Improve this schema
 const schema = {
   type: 'object',
   title: 'Credential',
   properties: {
-    '@context': schemas.jsonldContext(),
+    '@context': jsonldContext(),
     // FIXME: improve credential context check
     //'@context': schemas.jsonldContext([
     //  constants.IDENTITY_CONTEXT_V1_URL,
     //  constants.CREDENTIALS_CONTEXT_V1_URL
     //]),
-    issuer: schemas.identifier(),
-    issued: schemas.w3cDateTime(),
+    issuer: identifier(),
+    issued: w3cDateTime(),
     claim: {
       required: ['id'],
       properties: {
-        id: schemas.identifier()
+        id: identifier()
       },
     }
   },
   required: ['issuer', 'issued', 'claim']
 };
 
-module.exports = function(extend) {
+export default function(extend) {
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}

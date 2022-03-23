@@ -1,7 +1,7 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
+import * as bedrock from 'bedrock';
 
 const schema = {
   title: 'URL',
@@ -14,9 +14,9 @@ const schema = {
   }
 };
 
-module.exports = function(extend) {
+export default function(extend) {
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}

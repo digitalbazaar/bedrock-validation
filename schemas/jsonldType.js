@@ -1,7 +1,7 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-module.exports = function(types, alternates) {
+export default function(types, alternates) {
   const schema = {
     title: 'Object Type',
     description: 'A set of terms, CURIEs, or URLs specifying the type of ' +
@@ -69,4 +69,4 @@ module.exports = function(types, alternates) {
   }
 
   return schema;
-};
+}

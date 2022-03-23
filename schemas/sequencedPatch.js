@@ -1,8 +1,8 @@
 /*!
- * Copyright (c) 2019-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
-const jsonPatch = require('./jsonPatch');
+import * as bedrock from 'bedrock';
+import jsonPatch from './jsonPatch.js';
 
 const schema = {
   required: ['patch', 'sequence', 'target'],
@@ -23,9 +23,9 @@ const schema = {
   additionalProperties: false
 };
 
-module.exports = function(extend) {
+export default function(extend) {
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}

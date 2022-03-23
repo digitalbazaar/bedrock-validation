@@ -1,9 +1,9 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
+import * as bedrock from 'bedrock';
 
-module.exports = function(context, extend) {
+export default function(context, extend) {
   const schema = {
     title: 'JSON-LD context',
     description: 'A JSON-LD Context'
@@ -51,4 +51,4 @@ module.exports = function(context, extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}
