@@ -1,10 +1,8 @@
 /*!
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
-const w3cDateTime = require('./w3cDateTime');
-const identifier = require('./identifier');
+import identifier from './identifier.js';
+import w3cDateTime from './w3cDateTime.js';
 
 const signature = {
   title: 'Ed25519Signature2020',
@@ -39,4 +37,6 @@ const schema = {
   }, signature]
 };
 
-module.exports = () => (schema);
+export default function() {
+  return schema;
+}

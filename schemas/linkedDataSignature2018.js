@@ -1,10 +1,8 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
-const w3cDateTime = require('./w3cDateTime');
-const identifier = require('./identifier');
+import identifier from './identifier.js';
+import w3cDateTime from './w3cDateTime.js';
 
 const baseSignature = {
   title: 'Linked Data Signature',
@@ -55,4 +53,6 @@ const schema = {
   }, signature]
 };
 
-module.exports = () => (schema);
+export default function() {
+  return schema;
+}

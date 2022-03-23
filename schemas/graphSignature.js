@@ -1,11 +1,10 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
-
-const jsonldType = require('./jsonldType');
-const w3cDateTime = require('./w3cDateTime');
-const identifier = require('./identifier');
+import * as bedrock from 'bedrock';
+import jsonldType from './jsonldType.js';
+import w3cDateTime from './w3cDateTime.js';
+import identifier from './identifier.js';
 
 const schema = {
   title: 'GraphSignature',
@@ -28,9 +27,9 @@ const schema = {
   additionalProperties: false
 };
 
-module.exports = function(extend) {
+export default function(extend) {
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}

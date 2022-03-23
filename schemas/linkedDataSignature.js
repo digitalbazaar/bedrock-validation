@@ -1,10 +1,9 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
-
-const w3cDateTime = require('./w3cDateTime');
-const identifier = require('./identifier');
+import * as bedrock from 'bedrock';
+import identifier from './identifier.js';
+import w3cDateTime from './w3cDateTime.js';
 
 const signature = {
   title: 'Linked Data Signature',
@@ -39,9 +38,9 @@ const schema = {
   }, signature]
 };
 
-module.exports = extend => {
+export default function(extend) {
   if(extend) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}

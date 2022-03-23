@@ -1,7 +1,7 @@
 /*!
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-const bedrock = require('bedrock');
+import * as bedrock from 'bedrock';
 
 // RFC 1034 - All labels have a max length of 63 octets.
 // https://tools.ietf.org/html/rfc1034#section-3.1
@@ -19,7 +19,7 @@ const schema = {
   }
 };
 
-module.exports = function(extend, options) {
+export default function(extend, options) {
   if(options && options.lowerCaseOnly) {
     extend = extend || {};
     if(!('pattern' in extend)) {
@@ -31,4 +31,4 @@ module.exports = function(extend, options) {
     return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
   }
   return schema;
-};
+}
