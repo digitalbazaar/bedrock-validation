@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.6.2 - 2022-03-xx
+## 5.6.2 - 2022-03-24
 
 ### Fixed
 - Handle case that import schema has no default export.
