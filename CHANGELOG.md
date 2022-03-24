@@ -1,5 +1,11 @@
 # bedrock-validation ChangeLog
 
+## 5.6.1 - 2022-03-xx
+
+### Fixed
+- Update schemas to use esm style and `esm.js` to transpile
+  to CommonJS.
+
 ## 5.6.0 - 2022-03-23
 
 ### Changed
