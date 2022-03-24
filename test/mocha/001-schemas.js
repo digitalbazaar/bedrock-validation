@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
 'use strict';
 
@@ -223,8 +223,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid comment with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/comment')(extend);
+      const schema = validation.schemas.comment(extend);
       const result = validation.validateInstance('test comment', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -246,8 +245,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid description with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/description')(extend);
+      const schema = validation.schemas.description(extend);
       const result = validation.validateInstance('test description', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -269,8 +267,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid identifier with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/identifier')(extend);
+      const schema = validation.schemas.identifier(extend);
       const result = validation.validateInstance('1234', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -292,8 +289,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid label with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/label')(extend);
+      const schema = validation.schemas.label(extend);
       const result = validation.validateInstance('test label', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -315,8 +311,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid title with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/title')(extend);
+      const schema = validation.schemas.title(extend);
       const result = validation.validateInstance('Test Title', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -338,8 +333,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid url with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/url')(extend);
+      const schema = validation.schemas.url(extend);
       const result = validation.validateInstance('http://foo.com/v2', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -361,8 +355,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid w3cDateTime with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/w3cDateTime')(extend);
+      const schema = validation.schemas.w3cDateTime(extend);
       const result = validation.validateInstance(
         '2016-01-01T01:00:00Z', schema);
       schema.name.should.equal('test');
@@ -385,8 +378,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid personName with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/personName')(extend);
+      const schema = validation.schemas.personName(extend);
       const result = validation.validateInstance('Name', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -410,8 +402,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid privateKeyPem with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/privateKeyPem')(extend);
+      const schema = validation.schemas.privateKeyPem(extend);
       const result = validation.validateInstance(privateKey, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -435,8 +426,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid privateKeyPem with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/publicKeyPem')(extend);
+      const schema = validation.schemas.publicKeyPem(extend);
       const result = validation.validateInstance(privateKey, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -535,8 +525,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid nonces with an extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/nonce')(extend);
+      const schema = validation.schemas.nonce(extend);
       const result = validation.validateInstance('12345678', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -616,8 +605,7 @@ describe('bedrock-validation', function() {
     });
     it('should accept valid slug with extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/slug')(extend);
+      const schema = validation.schemas.slug(extend);
       const result = validation.validateInstance('a23', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -630,28 +618,25 @@ describe('bedrock-validation', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept a URL', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')('http://foo.com/v1');
+      const schema = validation.schemas.jsonldContext('http://foo.com/v1');
       const result = validation.validateInstance('http://foo.com/v1', schema);
       result.valid.should.be.true;
     });
     it('should accept a URL with an extend', function() {
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')('http://foo.com/v1', extend);
+      const schema = validation.schemas.jsonldContext(
+        'http://foo.com/v1', extend);
       const result = validation.validateInstance('http://foo.com/v1', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
     it('should reject the wrong a URL', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')('http://foo.com/v1');
+      const schema = validation.schemas.jsonldContext('http://foo.com/v1');
       const result = validation.validateInstance('http://foo.com/v2', schema);
       result.valid.should.be.false;
     });
     it('should accept an array of URLs', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')([
+      const schema = validation.schemas.jsonldContext([
         'http://foo.com/v1',
         'http://bar.com/v1'
       ]);
@@ -660,8 +645,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.true;
     });
     it('should reject the wrong array of URLs', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')([
+      const schema = validation.schemas.jsonldContext([
         'http://foo.com/v1',
         'http://bar.com/v1'
       ]);
@@ -670,8 +654,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.false;
     });
     it('should accept an array of objects', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')([
+      const schema = validation.schemas.jsonldContext([
         {url: 'http://foo.com/v1'},
         {url: 'http://bar.com/v1'}
       ]);
@@ -682,8 +665,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.true;
     });
     it('should accept an array of objects w/compiled schema', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldContext')([
+      const schema = validation.schemas.jsonldContext([
         {url: 'http://foo.com/v1'},
         {url: 'http://bar.com/v1'}
       ]);
@@ -702,38 +684,33 @@ describe('bedrock-validation', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept a string', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')('Group');
+      const schema = validation.schemas.jsonldType('Group');
       const type = 'Group';
       const result = validation.validateInstance(type, schema);
       result.valid.should.be.true;
     });
     it('should accept a string with alternates', function() {
       const alternate = 1;
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')('Group', alternate);
+      const schema = validation.schemas.jsonldType('Group', alternate);
       const type = 'Group';
       const result = validation.validateInstance(type, schema);
       schema.anyOf.length.should.equal(4);
       result.valid.should.be.true;
     });
     it('should reject the wrong string', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')('Group');
+      const schema = validation.schemas.jsonldType('Group');
       const type = 'Wrong';
       const result = validation.validateInstance(type, schema);
       result.valid.should.be.false;
     });
     it('should accept an array of strings', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')(['Group', 'Name']);
+      const schema = validation.schemas.jsonldType(['Group', 'Name']);
       const type = ['Group', 'Name'];
       const result = validation.validateInstance(type, schema);
       result.valid.should.be.true;
     });
     it('should reject the wrong array of strings', function() {
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonldType')(['Group', 'Name']);
+      const schema = validation.schemas.jsonldType(['Group', 'Name']);
       const type = ['Group', 'Wrong'];
       const result = validation.validateInstance(type, schema);
       result.valid.should.be.false;
@@ -765,8 +742,7 @@ describe('bedrock-validation', function() {
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/graphSignature')(extend);
+      const schema = validation.schemas.graphSignature(extend);
       const result = validation.validateInstance(signature, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -813,8 +789,7 @@ describe('bedrock-validation', function() {
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/linkedDataSignature')(extend);
+      const schema = validation.schemas.linkedDataSignature(extend);
       const result = validation.validateInstance(signature, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -975,8 +950,7 @@ describe('bedrock-validation', function() {
         }
       };
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/credential')(extend);
+      const schema = validation.schemas.credential(extend);
       const result = validation.validateInstance(credential, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -1024,8 +998,7 @@ describe('bedrock-validation', function() {
         {op: 'add', path: '/email', value: 'pdoe@example.com'}
       ];
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/jsonPatch')(extend);
+      const schema = validation.schemas.jsonPatch(extend);
       const result = validation.validateInstance(patch, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -1097,8 +1070,7 @@ describe('bedrock-validation', function() {
         sequence: 1
       };
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/sequencedPatch')(extend);
+      const schema = validation.schemas.sequencedPatch(extend);
       const result = validation.validateInstance(doc, schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -1114,8 +1086,7 @@ describe('bedrock-validation', function() {
         sequence: 1
       };
       const extend = {name: 'test'};
-      // eslint-disable-next-line max-len
-      const schema = require('../node_modules/bedrock-validation/schemas/sequencedPatch')(extend);
+      const schema = validation.schemas.sequencedPatch(extend);
       const validate = validation.compile(schema);
       const result = validate(doc);
       schema.name.should.equal('test');
