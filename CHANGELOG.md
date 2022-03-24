@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 5.6.1 - 2022-03-xx
+## 5.6.1 - 2022-03-24
 
 ### Fixed
 - Update schemas to use esm style and `esm.js` to transpile
