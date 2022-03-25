@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 5.6.3 - 2022-03-xx
+
+### Fixed
+- Fix slow loading of schemas in same dir (load in parallel).
+
 ## 5.6.2 - 2022-03-24
 
 ### Fixed
