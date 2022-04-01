@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 6.0.1 - 2022-04-xx
+
+### Fixed
+- Use `jsdoc-to-markdown@7`.
+
 ## 6.0.0 - 2022-04-01
 
 ### Changed
