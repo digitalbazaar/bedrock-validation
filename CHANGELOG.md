@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 6.0.0 - 2022-04-xx
+## 6.0.0 - 2022-04-01
 
 ### Changed
 - **BREAKING**: Rename package to `@bedrock/server`.
