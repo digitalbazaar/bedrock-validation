@@ -85,7 +85,7 @@ describe('bedrock-validation', function() {
         let err;
 
         try {
-          result = validation.validate('test');
+          result = validateInstance({instance: {}, schema: 'test'});
         } catch(e) {
           err = e;
         }
@@ -155,7 +155,7 @@ describe('bedrock-validation', function() {
     it('should accept valid comment with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.comment(extend);
-      const result = validateInstance('test comment', schema);
+      const result = validateInstance({instance: 'test comment', schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
