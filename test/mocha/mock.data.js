@@ -1,11 +1,8 @@
 
-/*
- * Copyright (c) 2021 Digital Bazaar, Inc. All rights reserved.
+/*!
+ * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
-
-const mock = {};
-module.exports = mock;
+export const mock = {};
 const keys = mock.keys = {};
 
 keys.alpha = {

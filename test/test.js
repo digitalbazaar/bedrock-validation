@@ -1,9 +1,8 @@
 /*!
- * Copyright (c) 2017-2020 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2017-2022 Digital Bazaar, Inc. All rights reserved.
  */
+import * as bedrock from '@bedrock/core';
+import '@bedrock/validation';
+import '@bedrock/test';
 
-const bedrock = require('bedrock');
-require('bedrock-validation');
-
-require('bedrock-test');
 bedrock.start();

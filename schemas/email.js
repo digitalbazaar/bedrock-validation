@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import * as bedrock from 'bedrock';
+import * as bedrock from '@bedrock/core';
 
 // RFC 1034 - All labels have a max length of 63 octets.
 // https://tools.ietf.org/html/rfc1034#section-3.1
