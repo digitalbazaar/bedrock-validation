@@ -1,5 +1,24 @@
 # bedrock-validation ChangeLog
 
+## 6.0.0 - 2022-04-xx
+
+### Changed
+- **BREAKING**: Rename package to `@bedrock/server`.
+- **BREAKING**: Convert to module (ESM).
+- **BREAKING**: Remove default export.
+- **BREAKING**: Require node 14.x.
+- **BREAKING**: All APIs now use options-style/named parameters.
+- **BREAKING**: When no schema can be found to match a given schema name,
+  the error returned from `validateInstance` is now of type `NotFoundError`
+  instead of `UnknownSchema`.
+
+### Removed
+- **BREAKING**: Remove deprecated `validate` function. Use `validateInstance`
+  or `createValidateMiddleware`.
+- **BREAKING**: All callback-style APIs/parameters have been removed. Functions
+  that validate instances are synchronous.
+- **BREAKING**: Removed obsolete `graphSignature` schema.
+
 ## 5.6.3 - 2022-03-24
 
 ### Fixed

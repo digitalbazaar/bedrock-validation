@@ -1,44 +1,34 @@
-/*
+/*!
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-'use strict';
+import * as validation from '@bedrock/validation';
+import {mock} from './mock.data.js';
+
+const {validateInstance} = validation;
 
 const expect = global.chai.expect;
-const validation = require('bedrock-validation');
-const validate = validation.validate;
-const mock = require('./mock.data.js');
 
 describe('bedrock-validation', function() {
   describe('invalid schema specified', function() {
-    describe('synchronous mode', function() {
-      it('should throw an error', function() {
-        expect(function() {
-          validate('test-unknown-schema', {some: 'object'});
-        }).to.throw('Could not validate data; unknown schema name ' +
-          '(test-unknown-schema).');
-      });
-    });
-    describe('asynchronous mode', function() {
-      it('should call callback with an error', function(done) {
-        validate('test-unknown-schema', {some: 'object'}, function(err) {
-          should.exist(err);
-          err.message.should.equal(
-            'Could not validate data; unknown schema name ' +
-            '(test-unknown-schema).');
-          done();
+    it('should throw an error', function() {
+      expect(function() {
+        validateInstance({
+          instance: {some: 'object'}, schema: 'test-unknown-schema'
         });
-      });
+      }).to.throw('Could not validate data; unknown schema name ' +
+        '(test-unknown-schema).');
     });
   });
 
   describe('comment', function() {
-    const schema = validation.getSchema('comment');
-    const validate = validation.compile(schema);
+    const schema = validation.getSchema({name: 'comment'});
+    const validate = validation.compile({schema});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should reject empty comments', function() {
-      const result = validation.validate('comment', '');
+      const result = validateInstance(
+        {instance: '', schema: 'comment'});
       result.valid.should.be.false;
     });
     it('should reject empty comments w/compiled schema', function() {
@@ -52,11 +42,12 @@ describe('bedrock-validation', function() {
       for(let i = 0; i < max; ++i) {
         str += tmp;
       }
-      const result = validation.validate('comment', str + '0');
+      const result = validateInstance(
+        {instance: str + '0', schema: 'comment'});
       result.valid.should.be.false;
     });
     it('should accept valid comments', function() {
-      const small = validation.validate('comment', '1');
+      const small = validateInstance({instance: '1', schema: 'comment'});
       should.not.exist(small.error);
       small.valid.should.be.true;
       const tmp = '12345678901234567890123456789012345678901234567890';
@@ -65,7 +56,7 @@ describe('bedrock-validation', function() {
       for(let i = 0; i < max; ++i) {
         str += tmp;
       }
-      const large = validation.validate('comment', str);
+      const large = validateInstance({instance: str, schema: 'comment'});
       large.valid.should.be.true;
     });
     it('should accept valid comments w/compiled schema', function() {
@@ -82,19 +73,13 @@ describe('bedrock-validation', function() {
       large.valid.should.be.true;
     });
     it('should accept normal non-letter symbols', function() {
-      const result = validation.validate(
-        'comment', '-a-zA-Z0-9~!@#$%^&*()_=+\\|{}[];:\'"<>,./? ');
+      const result = validateInstance({
+        instance: '-a-zA-Z0-9~!@#$%^&*()_=+\\|{}[];:\'"<>,./? ',
+        schema: 'comment'
+      });
       result.valid.should.be.true;
     });
-    it('should validate with name as an object', function() {
-      const name = {
-        body: 'comment',
-        query: 'comment'
-      };
-      const result = validation.validate(name, '1');
-      result.valid.should.be.true;
-    });
-    it('should throw an UnknownSchema error when schema does not exist',
+    it('should throw a "NotFoundError" error when schema does not exist',
       function() {
         let result;
         let err;
@@ -107,62 +92,8 @@ describe('bedrock-validation', function() {
 
         should.exist(err);
         should.not.exist(result);
-        err.name.should.equal('UnknownSchema');
+        err.name.should.equal('NotFoundError');
       });
-    it('should raise a body ValidationError via legacy middleware', done => {
-      const req = {
-        body: ''
-      };
-      const res = {};
-      const next = function(err) {
-        should.exist(err);
-        err.name.should.equal('ValidationError');
-        done();
-      };
-
-      const middleware = validation.validate('comment');
-      middleware(req, res, next);
-    });
-    it('should raise a query ValidationError via legacy middleware', done => {
-      const req = {
-        query: ''
-      };
-      const res = {};
-      const next = function(err) {
-        should.exist(err);
-        err.name.should.equal('ValidationError');
-        done();
-      };
-
-      const middleware = validation.validate({query: 'comment'});
-      middleware(req, res, next);
-    });
-    it('should pass body validation via legacy middleware', done => {
-      const req = {
-        body: 'comment'
-      };
-      const res = {};
-      const next = function(err) {
-        should.not.exist(err);
-        done();
-      };
-
-      const middleware = validation.validate('comment');
-      middleware(req, res, next);
-    });
-    it('should pass query validation via legacy middleware', done => {
-      const req = {
-        query: 'comment'
-      };
-      const res = {};
-      const next = function(err) {
-        should.not.exist(err);
-        done();
-      };
-
-      const middleware = validation.validate({query: 'comment'});
-      middleware(req, res, next);
-    });
     it('should raise a body ValidationError via middleware', done => {
       const req = {
         body: ''
@@ -174,7 +105,7 @@ describe('bedrock-validation', function() {
         done();
       };
 
-      const bodySchema = validation.getSchema('comment');
+      const bodySchema = validation.getSchema({name: 'comment'});
       const middleware = validation.createValidateMiddleware({bodySchema});
       middleware(req, res, next);
     });
@@ -189,7 +120,7 @@ describe('bedrock-validation', function() {
         done();
       };
 
-      const querySchema = validation.getSchema('comment');
+      const querySchema = validation.getSchema({name: 'comment'});
       const middleware = validation.createValidateMiddleware({querySchema});
       middleware(req, res, next);
     });
@@ -203,7 +134,7 @@ describe('bedrock-validation', function() {
         done();
       };
 
-      const bodySchema = validation.getSchema('comment');
+      const bodySchema = validation.getSchema({name: 'comment'});
       const middleware = validation.createValidateMiddleware({bodySchema});
       middleware(req, res, next);
     });
@@ -217,368 +148,496 @@ describe('bedrock-validation', function() {
         done();
       };
 
-      const querySchema = validation.getSchema('comment');
+      const querySchema = validation.getSchema({name: 'comment'});
       const middleware = validation.createValidateMiddleware({querySchema});
       middleware(req, res, next);
     });
     it('should accept valid comment with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.comment(extend);
-      const result = validation.validateInstance('test comment', schema);
+      const result = validateInstance('test comment', schema);
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('description', function() {
-    const schema = validation.getSchema('description');
+    const schema = validation.getSchema({name: 'description'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid description', function() {
-      const result = validation.validate('description', 'test description');
+      const result = validateInstance({
+        instance: 'test description',
+        schema: 'description'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid description', function() {
-      const result = validation.validate('description', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'description'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid description with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.description(extend);
-      const result = validation.validateInstance('test description', schema);
+      const result = validateInstance({
+        instance: 'test description',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('identifier', function() {
-    const schema = validation.getSchema('identifier');
+    const schema = validation.getSchema({name: 'identifier'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid identifier', function() {
-      const result = validation.validate('identifier', '1234');
+      const result = validateInstance({
+        instance: '1234',
+        schema: 'identifier'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid identifier', function() {
-      const result = validation.validate('identifier', '');
+      const result = validateInstance({
+        instance: '',
+        schema: 'identifier'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid identifier with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.identifier(extend);
-      const result = validation.validateInstance('1234', schema);
+      const result = validateInstance({
+        instance: '1234',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('label', function() {
-    const schema = validation.getSchema('label');
+    const schema = validation.getSchema({name: 'label'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid label', function() {
-      const result = validation.validate('label', 'test label');
+      const result = validateInstance({
+        instance: 'test label',
+        schema: 'label'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid label', function() {
-      const result = validation.validate('label', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'label'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid label with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.label(extend);
-      const result = validation.validateInstance('test label', schema);
+      const result = validateInstance({
+        instance: 'test label',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('title', function() {
-    const schema = validation.getSchema('title');
+    const schema = validation.getSchema({name: 'title'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid title', function() {
-      const result = validation.validate('title', 'Test Title');
+      const result = validateInstance({
+        instance: 'Test Title',
+        schema: 'title'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid title', function() {
-      const result = validation.validate('title', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'title'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid title with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.title(extend);
-      const result = validation.validateInstance('Test Title', schema);
+      const result = validateInstance({
+        instance: 'Test Title',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('url', function() {
-    const schema = validation.getSchema('url');
+    const schema = validation.getSchema({name: 'url'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid url', function() {
-      const result = validation.validate('url', 'http://foo.com/v2');
+      const result = validateInstance({
+        instance: 'http://foo.com/v2',
+        schema: 'url'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid url', function() {
-      const result = validation.validate('url', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'url'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid url with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.url(extend);
-      const result = validation.validateInstance('http://foo.com/v2', schema);
+      const result = validateInstance({
+        instance: 'http://foo.com/v2',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('w3cDateTime', function() {
-    const schema = validation.getSchema('w3cDateTime');
+    const schema = validation.getSchema({name: 'w3cDateTime'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid w3cDateTime', function() {
-      const result = validation.validate('w3cDateTime', '2016-01-01T01:00:00Z');
+      const result = validateInstance({
+        instance: '2016-01-01T01:00:00Z',
+        schema: 'w3cDateTime'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid w3cDateTime', function() {
-      const result = validation.validate('w3cDateTime', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'w3cDateTime'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid w3cDateTime with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.w3cDateTime(extend);
-      const result = validation.validateInstance(
-        '2016-01-01T01:00:00Z', schema);
+      const result = validateInstance({
+        instance: '2016-01-01T01:00:00Z',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('personName', function() {
-    const schema = validation.getSchema('personName');
+    const schema = validation.getSchema({name: 'personName'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid personName', function() {
-      const result = validation.validate('personName', 'Name');
+      const result = validateInstance({
+        instance: 'Name',
+        schema: 'personName'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid personName', function() {
-      const result = validation.validate('personName', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'personName'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid personName with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.personName(extend);
-      const result = validation.validateInstance('Name', schema);
+      const result = validateInstance({
+        instance: 'Name',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('privateKeyPem', function() {
-    const schema = validation.getSchema('privateKeyPem');
-    const privateKey = mock.keys.alpha.privateKey;
+    const schema = validation.getSchema({name: 'privateKeyPem'});
+    const {privateKey} = mock.keys.alpha;
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid privateKeyPem', function() {
-
-      const result = validation.validate('privateKeyPem', privateKey);
+      const result = validateInstance({
+        instance: privateKey,
+        schema: 'privateKeyPem'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid privateKeyPem', function() {
-      const result = validation.validate('privateKeyPem', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'privateKeyPem'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid privateKeyPem with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.privateKeyPem(extend);
-      const result = validation.validateInstance(privateKey, schema);
+      const result = validateInstance({
+        instance: privateKey,
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('publicKeyPem', function() {
-    const schema = validation.getSchema('publicKeyPem');
-    const privateKey = mock.keys.alpha.publicKey;
+    const schema = validation.getSchema({name: 'publicKeyPem'});
+    const {publicKey} = mock.keys.alpha;
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept valid publicKeyPem', function() {
-
-      const result = validation.validate('publicKeyPem', privateKey);
+      const result = validateInstance({
+        instance: publicKey,
+        schema: 'publicKeyPem'
+      });
       result.valid.should.be.true;
     });
     it('should reject an invalid publicKeyPem', function() {
-      const result = validation.validate('publicKeyPem', {});
+      const result = validateInstance({
+        instance: {},
+        schema: 'publicKeyPem'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid privateKeyPem with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.publicKeyPem(extend);
-      const result = validation.validateInstance(privateKey, schema);
+      const result = validateInstance({
+        instance: publicKey,
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('email', function() {
-    const schema = validation.getSchema('email');
+    const schema = validation.getSchema({name: 'email'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should reject empty emails', function() {
-      const result = validation.validate('email', '');
+      const result = validateInstance({
+        instance: '',
+        schema: 'email'
+      });
       result.valid.should.be.false;
     });
     it('should reject emails without `@`', function() {
-      const result = validation.validate('email', 'abcdefg');
+      const result = validateInstance({
+        instance: 'abcdefg',
+        schema: 'email'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid emails', function() {
-      const small = validation.validate('email', 'a@b.io');
+      const small = validateInstance({
+        instance: 'a@b.io',
+        schema: 'email'
+      });
       should.not.exist(small.error);
       small.valid.should.be.true;
     });
-    it('should accept valid emails with callback', function() {
-      const callback = function(err, result) {
-        should.not.exist(err);
-        result.valid.should.be.true;
-      };
-      validation.validate('email', 'a@b.io', callback);
-    });
     it('should accept normal non-letter symbols', function() {
-      const result = validation.validate(
-        'email', 'abc123~!$%^&*_=+-@example.org');
+      const result = validateInstance({
+        instance: 'abc123~!$%^&*_=+-@example.org',
+        schema: 'email'
+      });
       result.valid.should.be.true;
     });
     it('should not accept emails with uppercase chars', function() {
-      const schema = validation.getSchema('email');
-      const result = validation.validateInstance('aBC@DEF.com', schema);
+      const schema = validation.getSchema({name: 'email'});
+      const result = validateInstance({
+        instance: 'aBC@DEF.com',
+        schema
+      });
       result.valid.should.be.false;
     });
     it('should reject emails with uppercase chars', function() {
       const schema = validation.schemas.email({}, {lowerCaseOnly: true});
-      const result = validation.validateInstance('aBC@DEF.com', schema);
+      const result = validateInstance({
+        instance: 'aBC@DEF.com',
+        schema
+      });
       result.valid.should.be.false;
     });
-    it('should reject emails with uppercase chars with callback',
-      function() {
-        const schema = validation.schemas.email({}, {lowerCaseOnly: true});
-        const callback = function(err, result) {
-          should.not.exist(err);
-          result.valid.should.be.false;
-        };
-        validation.validateInstance('aBC@DEF.com', schema, callback);
-      });
   });
 
   describe('nonce', function() {
-    const schema = validation.getSchema('nonce');
+    const schema = validation.getSchema({name: 'nonce'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should reject empty nonces', function() {
-      const result = validation.validate('nonce', '');
+      const result = validateInstance({
+        instance: '',
+        schema: 'nonce'
+      });
       result.valid.should.be.false;
     });
     it('should reject nonces that are too short', function() {
-      const result = validation.validate('nonce', '1234567');
+      const result = validateInstance({
+        instance: '1234567',
+        schema: 'nonce'
+      });
       result.valid.should.be.false;
     });
     it('should reject nonces that are too long', function() {
-      const result = validation.validate(
-        'nonce',
-        // 65 chars
-        '1234567890123456789012345678901234567890' +
-        '1234567890123456789012345');
+      const result = validateInstance({
+        instance:
+          // 65 chars
+          '1234567890123456789012345678901234567890' +
+          '1234567890123456789012345',
+        schema: 'nonce'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid nonces', function() {
-      const small = validation.validate('nonce', '12345678');
+      const small = validateInstance({
+        instance: '12345678',
+        schema: 'nonce'
+      });
       small.valid.should.be.true;
-      const large = validation.validate(
-        'nonce',
-        // 64 chars
-        '1234567890123456789012345678901234567890' +
-        '123456789012345678901234');
+      const large = validateInstance({
+        instance:
+          // 64 chars
+          '1234567890123456789012345678901234567890' +
+          '123456789012345678901234',
+        schema: 'nonce'
+      });
       large.valid.should.be.true;
     });
     it('should accept normal non-letter characters', function() {
-      const result = validation.validate('nonce', '-a-zA-Z0-9~!$%^&*()_=+. ');
+      const result = validateInstance({
+        instance: '-a-zA-Z0-9~!$%^&*()_=+. ',
+        schema: 'nonce'
+      });
       result.valid.should.be.true;
     });
     it('should reject invalid characters', function() {
-      const result = validation.validate('nonce', '|||||||||');
+      const result = validateInstance({
+        instance: '|||||||||',
+        schema: 'nonce'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid nonces with an extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.nonce(extend);
-      const result = validation.validateInstance('12345678', schema);
+      const result = validateInstance({
+        instance: '12345678',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('slug', function() {
-    const schema = validation.getSchema('slug');
-    const validate = validation.compile(schema);
+    const schema = validation.getSchema({name: 'slug'});
+    const validate = validation.compile({schema});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should reject empty slugs', function() {
-      const result = validation.validate('slug', '');
+      const result = validateInstance({
+        instance: '',
+        schema: 'slug'
+      });
       result.valid.should.be.false;
     });
     it('should reject slugs that are too short', function() {
       // 2 chars
-      const result = validation.validate('slug', '12');
+      const result = validateInstance({
+        instance: '12',
+        schema: 'slug'
+      });
       result.valid.should.be.false;
     });
     it('should reject slugs that are too long', function() {
       // 33 chars
-      const result = validation.validate(
-        'slug', '12345678901234567890123456789012345678901');
+      const result = validateInstance({
+        instance: '12345678901234567890123456789012345678901',
+        schema: 'slug'
+      });
       result.valid.should.be.false;
     });
     it('should accept valid slugs', function() {
       // 3 chars
-      let result = validation.validate('slug', 'a23');
+      let result = validateInstance({
+        instance: 'a23',
+        schema: 'slug'
+      });
       result.valid.should.be.true;
       // 40 chars
-      result = validation.validate(
-        'slug', '1234567890123456789012345678901234567890');
+      result = validateInstance({
+        instance: '1234567890123456789012345678901234567890',
+        schema: 'slug'
+      });
       result.valid.should.be.true;
       // uuids
-      result = validation.validate(
-        'slug', '2f5f3815-fba0-4e07-a248-d79c26ca8fd6');
+      result = validateInstance({
+        instance: '2f5f3815-fba0-4e07-a248-d79c26ca8fd6',
+        schema: 'slug'
+      });
       result.valid.should.be.true;
     });
     it('should accept normal non-letter characters', function() {
-      const result = validation.validate('slug', 'az-az09~_.');
+      const result = validateInstance({
+        instance: 'az-az09~_.',
+        schema: 'slug'
+      });
       result.valid.should.be.true;
     });
     it('should reject invalid characters', function() {
-      let result = validation.validate('slug', 'badchar@');
+      let result = validateInstance({
+        instance: 'badchar@',
+        schema: 'slug'
+      });
       result.valid.should.be.false;
-      result = validation.validate('slug', '-hyphenstart');
+      result = validateInstance({
+        instance: '-hyphenstart',
+        schema: 'slug'
+      });
       result.valid.should.be.false;
     });
     it('should mask value when error occurs', function() {
       schema.errors.mask = true;
-      const result = validation.validateInstance('sl', schema);
+      const result = validateInstance({
+        instance: 'sl',
+        schema
+      });
       result.valid.should.be.false;
       result.error.details.errors[0].details.value.should.equal('***MASKED***');
     });
@@ -590,7 +649,10 @@ describe('bedrock-validation', function() {
     });
     it('should mask value when error occurs with a custom mask', function() {
       schema.errors.mask = 'custom mask value';
-      const result = validation.validateInstance('sl', schema);
+      const result = validateInstance({
+        instance: 'sl',
+        schema
+      });
       result.valid.should.be.false;
       result.error.details.errors[0].details.value.should
         .equal('custom mask value');
@@ -606,33 +668,45 @@ describe('bedrock-validation', function() {
     it('should accept valid slug with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.slug(extend);
-      const result = validation.validateInstance('a23', schema);
+      const result = validateInstance({
+        instance: 'a23',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('jsonldContext', function() {
-    const schema = validation.getSchema('jsonldContext');
+    const schema = validation.getSchema({name: 'jsonldContext'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept a URL', function() {
       const schema = validation.schemas.jsonldContext('http://foo.com/v1');
-      const result = validation.validateInstance('http://foo.com/v1', schema);
+      const result = validateInstance({
+        instance: 'http://foo.com/v1',
+        schema
+      });
       result.valid.should.be.true;
     });
     it('should accept a URL with an extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.jsonldContext(
         'http://foo.com/v1', extend);
-      const result = validation.validateInstance('http://foo.com/v1', schema);
+      const result = validateInstance({
+        instance: 'http://foo.com/v1',
+        schema
+      });
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
     it('should reject the wrong a URL', function() {
       const schema = validation.schemas.jsonldContext('http://foo.com/v1');
-      const result = validation.validateInstance('http://foo.com/v2', schema);
+      const result = validateInstance({
+        instance: 'http://foo.com/v2',
+        schema
+      });
       result.valid.should.be.false;
     });
     it('should accept an array of URLs', function() {
@@ -640,8 +714,10 @@ describe('bedrock-validation', function() {
         'http://foo.com/v1',
         'http://bar.com/v1'
       ]);
-      const result = validation.validateInstance(
-        ['http://foo.com/v1', 'http://bar.com/v1'], schema);
+      const result = validateInstance({
+        instance: ['http://foo.com/v1', 'http://bar.com/v1'],
+        schema
+      });
       result.valid.should.be.true;
     });
     it('should reject the wrong array of URLs', function() {
@@ -649,8 +725,10 @@ describe('bedrock-validation', function() {
         'http://foo.com/v1',
         'http://bar.com/v1'
       ]);
-      const result = validation.validateInstance(
-        ['http://foo.com/v1', 'http://wrong.com/v1'], schema);
+      const result = validateInstance({
+        instance: ['http://foo.com/v1', 'http://wrong.com/v1'],
+        schema
+      });
       result.valid.should.be.false;
     });
     it('should accept an array of objects', function() {
@@ -658,10 +736,10 @@ describe('bedrock-validation', function() {
         {url: 'http://foo.com/v1'},
         {url: 'http://bar.com/v1'}
       ]);
-      const result = validation.validateInstance([
-        {url: 'http://foo.com/v1'},
-        {url: 'http://bar.com/v1'}
-      ], schema);
+      const result = validateInstance({
+        instance: [{url: 'http://foo.com/v1'}, {url: 'http://bar.com/v1'}],
+        schema
+      });
       result.valid.should.be.true;
     });
     it('should accept an array of objects w/compiled schema', function() {
@@ -669,7 +747,7 @@ describe('bedrock-validation', function() {
         {url: 'http://foo.com/v1'},
         {url: 'http://bar.com/v1'}
       ]);
-      const validate = validation.compile(schema);
+      const validate = validation.compile({schema});
       const result = validate([
         {url: 'http://foo.com/v1'},
         {url: 'http://bar.com/v1'}
@@ -679,78 +757,61 @@ describe('bedrock-validation', function() {
   });
 
   describe('jsonldType', function() {
-    const schema = validation.getSchema('jsonldType');
+    const schema = validation.getSchema({name: 'jsonldType'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should accept a string', function() {
       const schema = validation.schemas.jsonldType('Group');
       const type = 'Group';
-      const result = validation.validateInstance(type, schema);
+      const result = validateInstance({
+        instance: type,
+        schema
+      });
       result.valid.should.be.true;
     });
     it('should accept a string with alternates', function() {
       const alternate = 1;
       const schema = validation.schemas.jsonldType('Group', alternate);
       const type = 'Group';
-      const result = validation.validateInstance(type, schema);
+      const result = validateInstance({
+        instance: type,
+        schema
+      });
       schema.anyOf.length.should.equal(4);
       result.valid.should.be.true;
     });
     it('should reject the wrong string', function() {
       const schema = validation.schemas.jsonldType('Group');
       const type = 'Wrong';
-      const result = validation.validateInstance(type, schema);
+      const result = validateInstance({
+        instance: type,
+        schema
+      });
       result.valid.should.be.false;
     });
     it('should accept an array of strings', function() {
       const schema = validation.schemas.jsonldType(['Group', 'Name']);
       const type = ['Group', 'Name'];
-      const result = validation.validateInstance(type, schema);
+      const result = validateInstance({
+        instance: type,
+        schema
+      });
       result.valid.should.be.true;
     });
     it('should reject the wrong array of strings', function() {
       const schema = validation.schemas.jsonldType(['Group', 'Name']);
       const type = ['Group', 'Wrong'];
-      const result = validation.validateInstance(type, schema);
+      const result = validateInstance({
+        instance: type,
+        schema
+      });
       result.valid.should.be.false;
     });
   });
 
-  describe('graphSignature', function() {
-    const schema = validation.getSchema('graphSignature');
-    it('should be an Object', function() {
-      schema.should.be.an.instanceof(Object);
-    });
-    it('should validate a GraphSignature2012 signature', function() {
-      const signature = {
-        type: 'GraphSignature2012',
-        created: '2016-01-01T01:00:00Z',
-        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
-        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
-      };
-      const result = validation.validateInstance(signature, schema);
-      result.valid.should.be.true;
-    });
-    it('should validate a GraphSignature2012 with an extend', function() {
-      const signature = {
-        type: 'GraphSignature2012',
-        created: '2016-01-01T01:00:00Z',
-        creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
-        signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
-      };
-      const extend = {name: 'test'};
-      const schema = validation.schemas.graphSignature(extend);
-      const result = validation.validateInstance(signature, schema);
-      schema.name.should.equal('test');
-      result.valid.should.be.true;
-    });
-  });
-
   describe('linkedDataSignature', function() {
-    const schema = validation.getSchema('linkedDataSignature');
+    const schema = validation.getSchema({name: 'linkedDataSignature'});
 
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
@@ -764,7 +825,7 @@ describe('bedrock-validation', function() {
         // eslint-disable-next-line max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.true;
     });
 
@@ -776,7 +837,7 @@ describe('bedrock-validation', function() {
         // eslint-disable-next-line max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.true;
     });
 
@@ -790,7 +851,7 @@ describe('bedrock-validation', function() {
       };
       const extend = {name: 'test'};
       const schema = validation.schemas.linkedDataSignature(extend);
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
@@ -803,7 +864,7 @@ describe('bedrock-validation', function() {
         // eslint-disable-next-line max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -814,7 +875,7 @@ describe('bedrock-validation', function() {
         // eslint-disable-next-line max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -826,7 +887,7 @@ describe('bedrock-validation', function() {
         // eslint-disable-next-line max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -838,7 +899,7 @@ describe('bedrock-validation', function() {
         // eslint-disable-next-line max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -849,13 +910,13 @@ describe('bedrock-validation', function() {
         created: '2016-01-01T01:00:00Z',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1'
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
   });
 
   describe('linkedDataSignature2020', function() {
-    const schema = validation.getSchema('linkedDataSignature2020');
+    const schema = validation.getSchema({name: 'linkedDataSignature2020'});
 
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
@@ -871,7 +932,7 @@ describe('bedrock-validation', function() {
         proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
           'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.true;
     });
 
@@ -884,7 +945,7 @@ describe('bedrock-validation', function() {
         proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
           'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -897,7 +958,7 @@ describe('bedrock-validation', function() {
         proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
           'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -908,7 +969,7 @@ describe('bedrock-validation', function() {
         proofValue: 'z3MvGcVxzRzzpKF1HA11EjvfPZsN8NAb7kXBRfeTm3CBg2gcJLQM5hZ' +
           'Nmj6Ccd9Lk4C1YueiFZvkSx4FuHVYVouQk'
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
@@ -920,13 +981,13 @@ describe('bedrock-validation', function() {
           'z6MknCCLeeHBUaHu4aHSVLDCYQW9gjVJ7a63FpMvtuVMy53T',
         proofPurpose: 'assertionMethod'
       };
-      const result = validation.validateInstance(signature, schema);
+      const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
   });
 
   describe('credential', function() {
-    const schema = validation.getSchema('credential');
+    const schema = validation.getSchema({name: 'credential'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
@@ -938,7 +999,7 @@ describe('bedrock-validation', function() {
           id: '1234'
         }
       };
-      const result = validation.validateInstance(credential, schema);
+      const result = validateInstance({instance: credential, schema});
       result.valid.should.be.true;
     });
     it('should validate a credential with an extend', function() {
@@ -951,14 +1012,14 @@ describe('bedrock-validation', function() {
       };
       const extend = {name: 'test'};
       const schema = validation.schemas.credential(extend);
-      const result = validation.validateInstance(credential, schema);
+      const result = validateInstance({instance: credential, schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('jsonPatch', function() {
-    const schema = validation.getSchema('jsonPatch');
+    const schema = validation.getSchema({name: 'jsonPatch'});
 
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
@@ -968,13 +1029,13 @@ describe('bedrock-validation', function() {
       const patch = [
         {op: 'add', path: '/email', value: 'pdoe@example.com'}
       ];
-      const result = validation.validateInstance(patch, schema);
+      const result = validateInstance({instance: patch, schema});
       result.valid.should.be.true;
     });
 
     it('should NOT validate a JSON patch that is an empty array', function() {
       const patch = [];
-      const result = validation.validateInstance(patch, schema);
+      const result = validateInstance({instance: patch, schema});
       result.valid.should.be.false;
     });
 
@@ -982,7 +1043,7 @@ describe('bedrock-validation', function() {
       const patch = {
         op: 'add', path: '/email', value: 'pdoe@example.com'
       };
-      const result = validation.validateInstance(patch, schema);
+      const result = validateInstance({instance: patch, schema});
       result.valid.should.be.false;
     });
 
@@ -990,7 +1051,7 @@ describe('bedrock-validation', function() {
       const patch = [
         {op: 'add', path: '/email', value: 'pdoe@example.com', extra: true}
       ];
-      const result = validation.validateInstance(patch, schema);
+      const result = validateInstance({instance: patch, schema});
       result.valid.should.be.false;
     });
     it('should validate a JSON patch with extend', function() {
@@ -999,14 +1060,14 @@ describe('bedrock-validation', function() {
       ];
       const extend = {name: 'test'};
       const schema = validation.schemas.jsonPatch(extend);
-      const result = validation.validateInstance(patch, schema);
+      const result = validateInstance({instance: patch, schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
   });
 
   describe('sequencedPatch', function() {
-    const schema = validation.getSchema('sequencedPatch');
+    const schema = validation.getSchema({name: 'sequencedPatch'});
 
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
@@ -1020,7 +1081,7 @@ describe('bedrock-validation', function() {
         ],
         sequence: 1
       };
-      const result = validation.validateInstance(doc, schema);
+      const result = validateInstance({instance: doc, schema});
       result.valid.should.be.true;
     });
 
@@ -1032,7 +1093,7 @@ describe('bedrock-validation', function() {
           {op: 'add', path: '/email', value: 'pdoe@example.com'}
         ]
       };
-      const result = validation.validateInstance(doc, schema);
+      const result = validateInstance({instance: doc, schema});
       result.valid.should.be.false;
     });
 
@@ -1044,7 +1105,7 @@ describe('bedrock-validation', function() {
         ],
         sequence: 1
       };
-      const result = validation.validateInstance(doc, schema);
+      const result = validateInstance({instance: doc, schema});
       result.valid.should.be.false;
     });
 
@@ -1057,7 +1118,7 @@ describe('bedrock-validation', function() {
         ],
         sequence: -1
       };
-      const result = validation.validateInstance(doc, schema);
+      const result = validateInstance({instance: doc, schema});
       result.valid.should.be.false;
     });
 
@@ -1071,7 +1132,7 @@ describe('bedrock-validation', function() {
       };
       const extend = {name: 'test'};
       const schema = validation.schemas.sequencedPatch(extend);
-      const result = validation.validateInstance(doc, schema);
+      const result = validateInstance({instance: doc, schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
@@ -1087,7 +1148,7 @@ describe('bedrock-validation', function() {
       };
       const extend = {name: 'test'};
       const schema = validation.schemas.sequencedPatch(extend);
-      const validate = validation.compile(schema);
+      const validate = validation.compile({schema});
       const result = validate(doc);
       schema.name.should.equal('test');
       result.valid.should.be.true;

@@ -1,27 +1,28 @@
 {
   "name": "bedrock-validation-test",
   "version": "0.0.1-0",
+  "type": "module",
   "private": true,
   "scripts": {
     "test": "node --preserve-symlinks test.js test",
-    "coverage": "cross-env NODE_ENV=test ESM_OPTIONS='{cache:false}' nyc --reporter=lcov --reporter=text-summary npm test",
-    "coverage-ci": "cross-env NODE_ENV=test ESM_OPTIONS='{cache:false}' nyc --reporter=lcovonly npm test",
-    "coverage-report": "nyc report"
+    "coverage": "cross-env NODE_ENV=test c8 --reporter=lcov --reporter=text-summary npm test",
+    "coverage-ci": "cross-env NODE_ENV=test c8 --reporter=lcovonly npm test",
+    "coverage-report": "c8 report"
   },
   "dependencies": {
-    "bedrock": "^3.0.0",
-    "bedrock-test": "^5.0.0",
-    "bedrock-validation": "file:..",
-    "cross-env": "^7.0.2",
-    "nyc": "^15.0.1"
+    "@bedrock/core": "^5.0.0",
+    "@bedrock/test": "^7.0.0",
+    "@bedrock/validation": "file:..",
+    "c8": "^7.11.0",
+    "cross-env": "^7.0.3"
   },
-  "nyc": {
+  "c8": {
     "excludeNodeModules": false,
     "include": [
-      "node_modules/bedrock-validation/**"
+      "node_modules/@bedrock/validation/**"
     ],
     "exclude": [
-      "node_modules/bedrock-validation/node_modules/**"
+      "node_modules/@bedrock/validation/node_modules/**"
     ]
   }
 }

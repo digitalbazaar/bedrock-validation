@@ -8,17 +8,17 @@ schemas based on [JSON schema][].
 
 ## Requirements
 
-- npm v3+
+- npm v6+
 
 ## Quick Examples
 
 ```
-npm install bedrock-validation
+npm install @bedrock/validation
 ```
 
 ```js
-var bedrock = require('bedrock');
-var {validate} = require('bedrock-validation');
+import * as bedrock from '@bedrock/core';
+import {validate} from '@bedrock/validation';
 
 // load schemas from '/foo'
 bedrock.config.validation.schema.paths.push('/foo');
@@ -50,9 +50,9 @@ For more documentation on configuration, see [config.js](./lib/config.js).
 
 ## API
 
-### validate(name, [data], [callback])
+### validate(name, [data])
 
-This method may be called with either one, two, or three parameters.
+This method may be called with either one or two parameters.
 
 If only one parameter is given:
 
@@ -68,29 +68,18 @@ If two parameters are given:
 * The first parameter must be a string and the second parameter must be the
   data to validate. The return value will contain the result of the validation.
 
-If three parameters are given:
-
-* The first parameter must be a string, the second parameter must be the data
-  to validate and the third must be a callback function to be called once the
-  validation operation completes. If an error occurs (including a validation
-  error), it will be passed as the first parameter of the callback, otherwise
-  validation has passed. The return value will contain the result of the
-  validation.
-
 ### getSchema(name)
 
 Retrieves a validation schema given a `name` for the schema. If no such
 schema exists, `null` is returned.
 
-### validateInstance(instance, schema, [callback])
+### validateInstance(instance, schema)
 
 Validates an `instance` (data) against a `schema`. This method may be used
 to validate data using a schema that wasn't necessarily registered via
 the configuration system. The `schema` must be a [JSON schema][] instance. The
-return value will contain the result of the validation. If a `callback` is
-given, it will be called once the validation operation completes. If an
-error occurred it will be passed in the second parameter of the `callback`.
-The synchronous and callback return value are the same:
+return value will contain the result of the validation. This function returns
+a promise that resolves to:
 ```js
 {
   valid: <boolean>,
