@@ -3,7 +3,7 @@
 ## 6.0.0 - 2022-04-01
 
 ### Changed
-- **BREAKING**: Rename package to `@bedrock/server`.
+- **BREAKING**: Rename package to `@bedrock/validation`.
 - **BREAKING**: Convert to module (ESM).
 - **BREAKING**: Remove default export.
 - **BREAKING**: Require node 14.x.
