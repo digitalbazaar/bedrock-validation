@@ -2,7 +2,9 @@
  * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
+import {extend as _extend} from '../lib/helpers.js';
 import jsonPatch from './jsonPatch.js';
+import {klona} from 'klona';
 
 const schema = {
   required: ['patch', 'sequence', 'target'],
@@ -25,7 +27,7 @@ const schema = {
 
 export default function(extend) {
   if(extend) {
-    return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
+    return _extend(true, klona(schema), extend);
   }
   return schema;
 }

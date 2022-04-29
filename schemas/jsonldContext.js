@@ -2,6 +2,8 @@
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
+import {extend as _extend} from '../lib/helpers.js';
+import {klona} from 'klona';
 
 export default function(context, extend) {
   const schema = {
@@ -48,7 +50,7 @@ export default function(context, extend) {
     }
   }
   if(extend) {
-    return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
+    return _extend(true, klona(schema), extend);
   }
   return schema;
 }
