@@ -2,8 +2,10 @@
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import * as bedrock from '@bedrock/core';
+import {extend as _extend} from '../lib/helpers.js';
 import identifier from './identifier.js';
 import jsonldContext from './jsonldContext.js';
+import {klona} from 'klona';
 import w3cDateTime from './w3cDateTime.js';
 
 // TODO: Improve this schema
@@ -31,7 +33,7 @@ const schema = {
 
 export default function(extend) {
   if(extend) {
-    return bedrock.util.extend(true, bedrock.util.clone(schema), extend);
+    return _extend(true, klona(schema), extend);
   }
   return schema;
 }
