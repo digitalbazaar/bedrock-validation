@@ -1,7 +1,6 @@
 /*!
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import * as bedrock from '@bedrock/core';
 import {extend as _extend} from '../lib/helpers.js';
 import identifier from './identifier.js';
 import {klona} from 'klona';
