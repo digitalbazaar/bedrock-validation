@@ -18,7 +18,8 @@ npm install @bedrock/validation
 
 ```js
 import * as bedrock from '@bedrock/core';
-import {validate} from '@bedrock/validation';
+import {postBarValidator, postBarQueryValidator} from '../schemas/my-schemas.js';
+import {createValidateMiddleware as validate} from '@bedrock/validation';
 
 // load schemas from '/foo'
 bedrock.config.validation.schema.paths.push('/foo');
@@ -28,7 +29,7 @@ bedrock.events.on('bedrock-express.configure.routes', function(app) {
   app.post('/bar',
     // validate the query using the 'postBarQueryValidator'
     // validate the response body using the 'postBarValidator'
-    validate({query: 'postBarQueryValidator', body: 'postBarValidator'}),
+    validate({query: postBarQueryValidator, body: postBarValidator}),
     function(req, res) {
       // do something
     });
@@ -50,23 +51,12 @@ For more documentation on configuration, see [config.js](./lib/config.js).
 
 ## API
 
-### validate(name, [data])
+### createValidateMiddleware({query: schema, body: schema})
 
-This method may be called with either one or two parameters.
+This method may be called with either `query` or `body` defined.
 
-If only one parameter is given:
-
-* The method returns express middleware that will be used to validate a request
-  using the schema associated with the given name.
-* If a string is provided for the first parameter, then it will be used as the
-  schema name for validating the request body.
-* If an object is provided for the first parameter, then the object can contain
-  `body` and `query` schema names as properties of the object.
-
-If two parameters are given:
-
-* The first parameter must be a string and the second parameter must be the
-  data to validate. The return value will contain the result of the validation.
+The method returns express middleware that will be used to validate a request
+using the schema associated with either `query` or `body`.
 
 ### getSchema(name)
 
