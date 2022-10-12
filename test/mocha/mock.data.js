@@ -43,3 +43,17 @@ keys.alpha = {
     '42EADs/ajTEckTxULdirbEk2rINRwQC5kWMde3fcwAnn6xt3wvOyuwg=\n' +
     '-----END RSA PRIVATE KEY-----'
 };
+
+const credentials = mock.credentials = {};
+
+credentials.valid = {
+  '@context': ['https://www.w3.org/2018/credentials/v1'],
+  id: 'urn:uuid:test-vc',
+  issuer: 'test',
+  issuanceDate: '1997-07-16T19:20:30',
+  type: ['VerifiableCredential'],
+  credentialSubject: {
+    id: '1234'
+  }
+};
+
