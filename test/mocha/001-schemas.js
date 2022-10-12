@@ -1006,6 +1006,32 @@ describe('bedrock-validation', function() {
     });
   });
 
+  describe('presentation', function() {
+    const schema = validation.getSchema({name: 'presentation'});
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should validate a presentation', function() {
+      const presentation = {
+        type: ['foo'],
+        verifiableCredential: [{...mock.credentials.valid}]
+      };
+      const result = validateInstance({instance: presentation, schema});
+      result.valid.should.be.true;
+    });
+    it('should validate a presentation with an extend', function() {
+      const presentation = {
+        type: ['foo'],
+        verifiableCredential: [{...mock.credentials.valid}]
+      };
+      const extend = {name: 'test'};
+      const schema = validation.schemas.presentation(extend);
+      const result = validateInstance({instance: presentation, schema});
+      schema.name.should.equal('test');
+      result.valid.should.be.true;
+    });
+  });
+
   describe('jsonPatch', function() {
     const schema = validation.getSchema({name: 'jsonPatch'});
 
