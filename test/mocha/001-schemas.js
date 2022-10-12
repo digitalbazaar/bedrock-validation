@@ -992,24 +992,12 @@ describe('bedrock-validation', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should validate a credential', function() {
-      const credential = {
-        issuer: 'test',
-        issued: '1997-07-16T19:20:30',
-        claim: {
-          id: '1234'
-        }
-      };
+      const credential = {...mock.credentials.valid};
       const result = validateInstance({instance: credential, schema});
       result.valid.should.be.true;
     });
     it('should validate a credential with an extend', function() {
-      const credential = {
-        issuer: 'test',
-        issued: '2016-01-01T01:00:00Z',
-        claim: {
-          id: '1234'
-        }
-      };
+      const credential = {...mock.credentials.valid};
       const extend = {name: 'test'};
       const schema = validation.schemas.credential(extend);
       const result = validateInstance({instance: credential, schema});
