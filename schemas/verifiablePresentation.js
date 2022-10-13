@@ -3,6 +3,7 @@
  */
 import verifiableCredential from './verifiableCredential.js';
 import {extend as _extend} from '../lib/helpers.js';
+import proof from './proof.js';
 import identifier from './identifier.js';
 import {klona} from 'klona';
 
@@ -36,12 +37,7 @@ const schema = {
       ]
     },
     holder: identifier(),
-    proof: {
-      anyOf: [
-        {type: 'object'},
-        {type: 'array', minItems: 1, items: {type: 'object'}}
-      ]
-    }
+    proof: proof()
   },
   required: ['@context', 'type']
 };
