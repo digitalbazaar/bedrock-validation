@@ -21,7 +21,7 @@ const schema = {
         type: 'string',
         const: 'https://www.w3.org/2018/credentials/v1'
       }],
-      items: [{type: 'string'}, {type: 'object'}]
+      items: [{anyOf: [{type: 'string'}, {type: 'object'}]}]
     },
     credentialSubject: {
       required: ['id'],
