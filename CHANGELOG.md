@@ -1,12 +1,10 @@
 # bedrock-validation ChangeLog
 
-## 8.0.0 -
-
-### Changed
-- **BREAKING**: Update validator for `VerifiableCredential`.
+## 7.1.0 -
 
 ### Added
 - Added a validator for `VerifiablePresentation`
+- Added a validator for `VerifiableCredential`.
 
 ## 7.0.0 - 2022-04-28
 

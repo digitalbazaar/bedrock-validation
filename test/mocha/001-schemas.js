@@ -987,7 +987,7 @@ describe('bedrock-validation', function() {
   });
 
   describe('credential', function() {
-    const schema = validation.getSchema({name: 'credential'});
+    const schema = validation.getSchema({name: 'verifiableCredential'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
@@ -999,7 +999,7 @@ describe('bedrock-validation', function() {
     it('should validate a credential with an extend', function() {
       const credential = {...mock.credentials.valid};
       const extend = {name: 'test'};
-      const schema = validation.schemas.credential(extend);
+      const schema = validation.schemas.verifiableCredential(extend);
       const result = validateInstance({instance: credential, schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
@@ -1007,7 +1007,7 @@ describe('bedrock-validation', function() {
   });
 
   describe('presentation', function() {
-    const schema = validation.getSchema({name: 'presentation'});
+    const schema = validation.getSchema({name: 'verifiablePresentation'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
@@ -1025,7 +1025,7 @@ describe('bedrock-validation', function() {
         verifiableCredential: [{...mock.credentials.valid}]
       };
       const extend = {name: 'test'};
-      const schema = validation.schemas.presentation(extend);
+      const schema = validation.schemas.verifiablePresentation(extend);
       const result = validateInstance({instance: presentation, schema});
       schema.name.should.equal('test');
       result.valid.should.be.true;
