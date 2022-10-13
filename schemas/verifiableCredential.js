@@ -49,7 +49,6 @@ const schema = {
   required: [
     '@context',
     'credentialSubject',
-    'id',
     'issuer',
     'issuanceDate',
     'type'
