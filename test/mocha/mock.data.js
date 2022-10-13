@@ -48,13 +48,20 @@ const credentialsContext = 'https://www.w3.org/2018/credentials/v1';
 const credentials = mock.credentials = {};
 
 credentials.valid = {
-  '@context': [credentialsContext],
+  '@context': [credentialsContext, 'https://www.schema.org'],
   id: 'urn:uuid:test-vc',
   issuer: 'test',
   issuanceDate: '1997-07-16T19:20:30',
   type: ['VerifiableCredential'],
   credentialSubject: {
     id: '1234'
+  }
+};
+
+credentials.invalid = {
+  invalidContext: {
+    ...credentials.valid,
+    '@context': ['https://www.schema.org']
   }
 };
 

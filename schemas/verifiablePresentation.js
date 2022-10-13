@@ -15,12 +15,9 @@ const schema = {
     '@context': {
       type: 'array',
       minItems: 1,
-      // first item must be the credentials context
-      prefixItems: [{
-        type: 'string',
-        const: 'https://www.w3.org/2018/credentials/v1'
-      }],
-      items: [{anyOf: [{type: 'string'}, {type: 'object'}]}]
+      items: [
+        {type: 'string', const: 'https://www.w3.org/2018/credentials/v1'},
+        {anyOf: [{type: 'string'}, {type: 'object'}]}]
     },
     id: identifier(),
     type: {
