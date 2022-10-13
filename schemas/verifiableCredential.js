@@ -2,6 +2,7 @@
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import {extend as _extend} from '../lib/helpers.js';
+import proof from './proof.js';
 import identifier from './identifier.js';
 import {klona} from 'klona';
 import w3cDateTime from './w3cDateTime.js';
@@ -24,20 +25,15 @@ const schema = {
       items: [{anyOf: [{type: 'string'}, {type: 'object'}]}]
     },
     credentialSubject: {
-      required: ['id'],
-      properties: {
-        id: identifier()
-      }
-    },
-    id: identifier(),
-    issuer: identifier(),
-    issuanceDate: w3cDateTime(),
-    proof: {
       anyOf: [
         {type: 'object'},
         {type: 'array', minItems: 1, items: {type: 'object'}}
       ]
     },
+    id: identifier(),
+    issuer: identifier(),
+    issuanceDate: w3cDateTime(),
+    proof: proof(),
     type: {
       type: 'array',
       minItems: 1,
