@@ -986,7 +986,7 @@ describe('bedrock-validation', function() {
     });
   });
 
-  describe('credential', function() {
+  describe('verifiableCredential', function() {
     const schema = validation.getSchema({name: 'verifiableCredential'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
@@ -1004,9 +1004,14 @@ describe('bedrock-validation', function() {
       schema.name.should.equal('test');
       result.valid.should.be.true;
     });
+    it('should not validate a credential with an invalid @context', function() {
+      const credential = {...mock.credentials.invalid.invalidContext};
+      const result = validateInstance({instance: credential, schema});
+      result.valid.should.be.false;
+    });
   });
 
-  describe('presentation', function() {
+  describe('verifiablePresentation', function() {
     const schema = validation.getSchema({name: 'verifiablePresentation'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
