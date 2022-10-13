@@ -10,7 +10,7 @@ import w3cDateTime from './w3cDateTime.js';
 // Based off of the VC Data Model 1.1
 const schema = {
   type: 'object',
-  title: 'Credential',
+  title: 'Verifiable Credential',
   additionalProperties: true,
   properties: {
     '@context': {
