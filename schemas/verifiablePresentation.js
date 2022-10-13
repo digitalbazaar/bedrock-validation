@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import credential from './credential.js';
+import verifiableCredential from './verifiableCredential.js';
 import {extend as _extend} from '../lib/helpers.js';
 import identifier from './identifier.js';
 import {klona} from 'klona';
@@ -21,8 +21,8 @@ const schema = {
     },
     verifiableCredential: {
       anyOf: [
-        credential(),
-        {type: 'array', minItems: 1, items: credential()}
+        verifiableCredential(),
+        {type: 'array', minItems: 1, items: verifiableCredential()}
       ]
     },
     holder: identifier(),
