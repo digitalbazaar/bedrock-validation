@@ -11,6 +11,16 @@ const schema = {
   type: 'object',
   additionalProperties: true,
   properties: {
+    '@context': {
+      type: 'array',
+      minItems: 1,
+      // first item must be the credentials context
+      prefixItems: [{
+        type: 'string',
+        const: 'https://www.w3.org/2018/credentials/v1'
+      }],
+      items: [{anyOf: [{type: 'string'}, {type: 'object'}]}]
+    },
     id: identifier(),
     type: {
       type: 'array',
@@ -33,7 +43,7 @@ const schema = {
       ]
     }
   },
-  required: ['type']
+  required: ['@context', 'type']
 };
 
 export default function(extend) {

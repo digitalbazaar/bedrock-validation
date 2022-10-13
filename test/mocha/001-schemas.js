@@ -1012,18 +1012,12 @@ describe('bedrock-validation', function() {
       schema.should.be.an.instanceof(Object);
     });
     it('should validate a presentation', function() {
-      const presentation = {
-        type: ['foo'],
-        verifiableCredential: [{...mock.credentials.valid}]
-      };
+      const presentation = {...mock.presentations.valid};
       const result = validateInstance({instance: presentation, schema});
       result.valid.should.be.true;
     });
     it('should validate a presentation with an extend', function() {
-      const presentation = {
-        type: ['foo'],
-        verifiableCredential: [{...mock.credentials.valid}]
-      };
+      const presentation = {...mock.presentations.valid};
       const extend = {name: 'test'};
       const schema = validation.schemas.verifiablePresentation(extend);
       const result = validateInstance({instance: presentation, schema});
