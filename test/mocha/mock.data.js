@@ -52,7 +52,7 @@ credentials.valid = {
   id: 'urn:uuid:test-vc',
   issuer: 'test',
   issuanceDate: '1997-07-16T19:20:30',
-  type: ['VerifiableCredential'],
+  type: ['VerifiableCredential', 'TestCredential'],
   credentialSubject: {
     id: '1234'
   }
