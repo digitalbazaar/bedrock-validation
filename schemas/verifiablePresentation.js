@@ -23,10 +23,14 @@ const schema = {
     type: {
       type: 'array',
       minItems: 1,
+      // this first type must be VerifiablePresentation
       items: [
         {type: 'string', const: 'VerifiablePresentation'},
-        {type: 'string'}
-      ]
+      ],
+      // additional types must be strings
+      additionalItems: {
+        type: 'string'
+      }
     },
     verifiableCredential: {
       anyOf: [

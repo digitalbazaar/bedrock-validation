@@ -34,10 +34,14 @@ const schema = {
     type: {
       type: 'array',
       minItems: 1,
+      // this first type must be VerifiableCredential
       items: [
         {type: 'string', const: 'VerifiableCredential'},
-        {type: 'string'}
-      ]
+      ],
+      // additional types must be strings
+      additionalItems: {
+        type: 'string'
+      }
     }
   },
   required: [
