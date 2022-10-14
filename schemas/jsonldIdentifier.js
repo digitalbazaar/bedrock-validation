@@ -9,7 +9,12 @@ const schema = {
   title: 'JSON-LD identifier',
   anyOf: [
     identifier(),
-    {type: 'object', properties: {id: identifier()}, required: ['id']}
+    {
+      type: 'object',
+      additionalProperties: true,
+      properties: {id: identifier()},
+      required: ['id']
+    }
   ]
 };
 
