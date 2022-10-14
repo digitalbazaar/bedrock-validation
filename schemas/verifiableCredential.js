@@ -17,9 +17,15 @@ const schema = {
     '@context': {
       type: 'array',
       minItems: 1,
-      items: [
-        {type: 'string', const: 'https://www.w3.org/2018/credentials/v1'},
-        {anyOf: [{type: 'string'}, {type: 'object'}]}]
+      // the first context must be the VC context
+      items: [{
+        type: 'string',
+        const: 'https://www.w3.org/2018/credentials/v1'
+      }],
+      // additional contexts maybe strings or objects
+      additionalItems: {
+        anyOf: [{type: 'string'}, {type: 'object'}]
+      }
     },
     credentialSubject: {
       anyOf: [
