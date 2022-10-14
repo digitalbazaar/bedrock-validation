@@ -3,7 +3,7 @@
  */
 import {extend as _extend} from '../lib/helpers.js';
 import proof from './proof.js';
-import identifier from './identifier.js';
+import identifier from './jsonldIdentifier.js';
 import {klona} from 'klona';
 import w3cDateTime from './w3cDateTime.js';
 
@@ -34,9 +34,10 @@ const schema = {
     type: {
       type: 'array',
       minItems: 1,
-      items: {
-        type: 'string'
-      }
+      items: [
+        {type: 'string', const: 'VerifiableCredential'},
+        {type: 'string'}
+      ]
     }
   },
   required: [
