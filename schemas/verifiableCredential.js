@@ -3,7 +3,7 @@
  */
 import {extend as _extend} from '../lib/helpers.js';
 import proof from './proof.js';
-import identifier from './jsonldIdentifier.js';
+import idOrObjectWithId from './helpers/idOrObjectWithId.js';
 import {klona} from 'klona';
 import w3cDateTime from './w3cDateTime.js';
 
@@ -33,8 +33,8 @@ const schema = {
         {type: 'array', minItems: 1, items: {type: 'object'}}
       ]
     },
-    id: identifier(),
-    issuer: identifier(),
+    id: idOrObjectWithId(),
+    issuer: idOrObjectWithId(),
     issuanceDate: w3cDateTime(),
     proof: proof(),
     type: {
