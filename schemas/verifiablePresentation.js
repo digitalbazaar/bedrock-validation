@@ -4,7 +4,7 @@
 import verifiableCredential from './verifiableCredential.js';
 import {extend as _extend} from '../lib/helpers.js';
 import proof from './proof.js';
-import identifier from './jsonldIdentifier.js';
+import idOrObjectWithId from './helpers/idOrObjectWithId.js';
 import {klona} from 'klona';
 
 const schema = {
@@ -25,7 +25,7 @@ const schema = {
         anyOf: [{type: 'string'}, {type: 'object'}]
       }
     },
-    id: identifier(),
+    id: idOrObjectWithId(),
     type: {
       type: 'array',
       minItems: 1,
@@ -44,7 +44,7 @@ const schema = {
         {type: 'array', minItems: 1, items: verifiableCredential()}
       ]
     },
-    holder: identifier(),
+    holder: idOrObjectWithId(),
     proof: proof()
   },
   required: ['@context', 'type']

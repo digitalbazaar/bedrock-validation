@@ -1,12 +1,12 @@
 /*!
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
-import {extend as _extend} from '../lib/helpers.js';
+import {extend as _extend} from '../../lib/helpers.js';
 import {klona} from 'klona';
-import identifier from './identifier.js';
+import identifier from '../identifier.js';
 
 const schema = {
-  title: 'JSON-LD identifier',
+  title: 'identifier or an objecr with an id',
   anyOf: [
     identifier(),
     {
