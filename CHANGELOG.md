@@ -5,7 +5,6 @@
 ### Added
 - Added a validator for `VerifiablePresentation`
 - Added a validator for `VerifiableCredential`.
-- Added a validator for `jsonldIdentifier`.
 
 ## 7.0.0 - 2022-04-28
 
