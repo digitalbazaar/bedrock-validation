@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 7.1.0 -
+## 7.1.0 - 2022-10-16
 
 ### Added
 - Added a validator for `VerifiablePresentation`
