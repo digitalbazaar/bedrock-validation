@@ -6,6 +6,10 @@
 - Added a validator for `VerifiablePresentation`
 - Added a validator for `VerifiableCredential`.
 
+### Changed
+- The `credential` and `presentation` schemas are now deprecated and
+  will be removed in a future major release.
+
 ## 7.0.0 - 2022-04-28
 
 ### Changed
