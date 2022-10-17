@@ -1,6 +1,6 @@
 {
   "name": "@bedrock/validation",
-  "version": "7.0.1-0",
+  "version": "7.1.0",
   "type": "module",
   "description": "Bedrock validation",
   "main": "./lib/index.js",
