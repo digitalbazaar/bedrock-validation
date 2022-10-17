@@ -6,7 +6,7 @@ import {klona} from 'klona';
 import identifier from '../identifier.js';
 
 const schema = {
-  title: 'identifier or an objecr with an id',
+  title: 'identifier or an object with an id',
   anyOf: [
     identifier(),
     {
