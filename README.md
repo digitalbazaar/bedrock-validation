@@ -29,7 +29,7 @@ bedrock.events.on('bedrock-express.configure.routes', function(app) {
   app.post('/bar',
     // validate the query using the 'postBarQueryValidator'
     // validate the response body using the 'postBarValidator'
-    validate({query: postBarQueryValidator, body: postBarValidator}),
+    validate({querySchema: postBarQueryValidator, bodySchema: postBarValidator}),
     function(req, res) {
       // do something
     });
@@ -51,7 +51,7 @@ For more documentation on configuration, see [config.js](./lib/config.js).
 
 ## API
 
-### createValidateMiddleware({query: schema, body: schema})
+### createValidateMiddleware({querySchema: schema, bodySchema: schema})
 
 This method may be called with either `query` or `body` defined.
 
