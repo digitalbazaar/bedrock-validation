@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 7.1.1 - 
+
+### Fixed
+- Errors now use the spelling `occurred` vs the typo `occured`.
+
 ## 7.1.0 - 2022-10-16
 
 ### Added
