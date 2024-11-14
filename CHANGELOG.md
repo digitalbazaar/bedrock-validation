@@ -1,6 +1,9 @@
 # bedrock-validation ChangeLog
 
-## 7.1.1 - 
+## 7.1.1 - 2024-11-xx
+
+### Changed
+- Test and support Node.js 18, 20, 22.
 
 ### Fixed
 - Errors now use the spelling `occurred` vs the typo `occured`.
