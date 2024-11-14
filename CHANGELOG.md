@@ -12,6 +12,8 @@
 
 ### Fixed
 - Errors now use the spelling `occurred` vs the typo `occured`.
+  - **NOTE**: This typo is known to be present in many tests of error message
+    and will require similar typo fixes.
 
 ## 7.1.0 - 2022-10-16
 
