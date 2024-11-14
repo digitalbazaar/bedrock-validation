@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 7.1.1 - 2024-11-xx
+## 7.1.1 - 2024-11-14
 
 ### Changed
 - Test and support Node.js 18, 20, 22.
