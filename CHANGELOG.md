@@ -4,6 +4,11 @@
 
 ### Changed
 - Test and support Node.js 18, 20, 22.
+- Update dependencies:
+  - `ajv@6.12.6`
+  - `klona@2.0.6`
+- Update dev dependencies.
+- Fix lint issues.
 
 ### Fixed
 - Errors now use the spelling `occurred` vs the typo `occured`.

@@ -5,7 +5,7 @@
   "description": "Bedrock validation",
   "main": "./lib/index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint --ext .cjs,.js ."
   },
   "repository": {
     "type": "git",
@@ -24,19 +24,19 @@
   },
   "homepage": "https://github.com/digitalbazaar/bedrock-validation",
   "dependencies": {
-    "ajv": "^6.12.0",
-    "klona": "^2.0.5"
+    "ajv": "^6.12.6",
+    "klona": "^2.0.6"
   },
   "peerDependencies": {
-    "@bedrock/core": "^6.0.0"
+    "@bedrock/core": "^6.2.0"
   },
   "directories": {
     "lib": "./lib"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-digitalbazaar": "^2.8.0",
-    "eslint-plugin-jsdoc": "^37.9.7",
-    "jsdoc-to-markdown": "^7.1.1"
+    "eslint": "^8.57.1",
+    "eslint-config-digitalbazaar": "^5.2.0",
+    "eslint-plugin-jsdoc": "^50.5.0",
+    "eslint-plugin-unicorn": "^56.0.0"
   }
 }
