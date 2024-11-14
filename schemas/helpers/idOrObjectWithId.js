@@ -2,8 +2,8 @@
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import {extend as _extend} from '../../lib/helpers.js';
-import {klona} from 'klona';
 import identifier from '../identifier.js';
+import {klona} from 'klona';
 
 const schema = {
   title: 'identifier or an object with an id',

@@ -2,9 +2,9 @@
  * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
  */
 import {extend as _extend} from '../lib/helpers.js';
-import proof from './proof.js';
 import idOrObjectWithId from './helpers/idOrObjectWithId.js';
 import {klona} from 'klona';
+import proof from './proof.js';
 import w3cDateTime from './w3cDateTime.js';
 
 // https://www.w3.org/TR/vc-data-model/
