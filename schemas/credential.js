@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import identifier from './identifier.js';
@@ -24,7 +24,7 @@ const schema = {
       required: ['id'],
       properties: {
         id: identifier()
-      },
+      }
     }
   },
   required: ['issuer', 'issued', 'claim']

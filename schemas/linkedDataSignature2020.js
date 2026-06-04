@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2021-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2021-2026 Digital Bazaar, Inc.
  */
 import identifier from './identifier.js';
 import w3cDateTime from './w3cDateTime.js';
@@ -24,8 +24,8 @@ const signature = {
         'the signature algorithm.',
       type: 'string'
     },
-    verificationMethod: identifier(),
-  },
+    verificationMethod: identifier()
+  }
 };
 
 const schema = {
@@ -33,7 +33,7 @@ const schema = {
   oneOf: [{
     type: 'array',
     items: signature,
-    minItems: 1,
+    minItems: 1
   }, signature]
 };
 

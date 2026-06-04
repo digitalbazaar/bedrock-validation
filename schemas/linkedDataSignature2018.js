@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import identifier from './identifier.js';
 import w3cDateTime from './w3cDateTime.js';
@@ -25,8 +25,8 @@ const baseSignature = {
         'algorithm.',
       type: 'string'
     },
-    verificationMethod: identifier(),
-  },
+    verificationMethod: identifier()
+  }
 };
 
 const signature = {
@@ -35,10 +35,10 @@ const signature = {
       // only one of `creator` or `verificationMethod`
       anyOf: [{
         required: ['creator'],
-        not: {required: ['verificationMethod']},
+        not: {required: ['verificationMethod']}
       }, {
         required: ['verificationMethod'],
-        not: {required: ['creator']},
+        not: {required: ['creator']}
       }]
     }
   ]
@@ -49,7 +49,7 @@ const schema = {
   oneOf: [{
     type: 'array',
     items: signature,
-    minItems: 1,
+    minItems: 1
   }, signature]
 };
 

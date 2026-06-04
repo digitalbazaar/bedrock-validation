@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import identifier from './identifier.js';
@@ -24,7 +24,7 @@ const signature = {
       description: 'The Base64 encoding of the result of the signature ' +
         'algorithm.',
       type: 'string'
-    },
+    }
   },
   // NOTE: id is not required
   required: ['type', 'creator', 'created', 'signatureValue']
@@ -35,7 +35,7 @@ const schema = {
   anyOf: [{
     type: 'array',
     items: signature,
-    minItems: 1,
+    minItems: 1
   }, signature]
 };
 

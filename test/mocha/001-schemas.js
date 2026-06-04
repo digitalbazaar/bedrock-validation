@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import * as validation from '@bedrock/validation';
 import {mock} from './mock.data.js';
@@ -822,7 +822,7 @@ describe('bedrock-validation', function() {
         type: 'LinkedDataSignature2015',
         created: '2016-01-01T01:00:00Z',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validateInstance({instance: signature, schema});
@@ -834,7 +834,7 @@ describe('bedrock-validation', function() {
         type: 'LinkedDataSignature2016',
         created: '2016-01-01T01:00:00Z',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validateInstance({instance: signature, schema});
@@ -846,7 +846,7 @@ describe('bedrock-validation', function() {
         type: 'LinkedDataSignature2015',
         created: '2016-01-01T01:00:00Z',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const extend = {name: 'test'};
@@ -861,7 +861,7 @@ describe('bedrock-validation', function() {
         type: 'GraphSignature2012',
         created: '2016-01-01T01:00:00Z',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validateInstance({instance: signature, schema});
@@ -872,38 +872,38 @@ describe('bedrock-validation', function() {
       const signature = {
         created: '2016-01-01T01:00:00Z',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('should NOT validate a LinkedDataSignature2015 signature w/missing created', function() {
       const signature = {
         type: 'LinkedDataSignature2015',
         creator: 'urn:5dd6a7e2-4c32-4a21-60b3-2385e5b6bcd4/keys/1',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('should NOT validate a LinkedDataSignature2015 signature w/missing creator', function() {
       const signature = {
         type: 'LinkedDataSignature2015',
         created: '2016-01-01T01:00:00Z',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         signatureValue: 'Lc6l7gxEPV1lKTj4KADaER52CiMBpvsHg7eZZJXzRK3U8N/eUYxITlenu3svj4KPrdnaBfMXGo3U/vAVaQNF5Er0g/SXC2KpUmRN4uyMYgQ5NwWklS2JqjJ/0Y3hio4GOgdMDiqrlZJvfQdtRaJjKoskc7F3bZtDVsX6Sr95erfOeobHOIMcbNIC0a96oYOaQlOeOC45BqQaUaczYKPayGEeQN2lfD+qR6b1MR4xtWNrx5pzzPpAPkjj3I91wiVQER43s/nq5XZKkDk8V8eD7xEURoDUcu3rA1qHLfrpRHJGCErXNc784O4R4Oqm5zQlkyB1mWJxnz3qSqzgqVG0sQ=='
       };
       const result = validateInstance({instance: signature, schema});
       result.valid.should.be.false;
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('should NOT validate a LinkedDataSignature2015 signature w/missing signature', function() {
       const signature = {
         type: 'LinkedDataSignature2015',
@@ -973,7 +973,6 @@ describe('bedrock-validation', function() {
       result.valid.should.be.false;
     });
 
-    // eslint-disable-next-line max-len
     it('should NOT validate a signature w/missing proofValue', function() {
       const signature = {
         type: 'Ed25519Signature2020',
@@ -1098,7 +1097,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.true;
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('should NOT validate a sequenced JSON patch without a sequence', function() {
       const doc = {
         target: 'some-identifier',
@@ -1110,7 +1109,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.false;
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('should NOT validate a sequenced JSON patch without a target', function() {
       const doc = {
         patch: [
@@ -1122,7 +1121,7 @@ describe('bedrock-validation', function() {
       result.valid.should.be.false;
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('should NOT validate a sequenced JSON patch with a negative sequence', function() {
       const doc = {
         target: 'some-identifier',
