@@ -3,7 +3,6 @@
  */
 import {extend as _extend} from '../lib/helpers.js';
 import jsonPatch from './jsonPatch.js';
-import {klona} from 'klona';
 
 const schema = {
   required: ['patch', 'sequence', 'target'],
@@ -26,7 +25,7 @@ const schema = {
 
 export default function(extend) {
   if(extend) {
-    return _extend(true, klona(schema), extend);
+    return _extend(true, structuredClone(schema), extend);
   }
   return schema;
 }

@@ -3,7 +3,6 @@
  */
 import {extend as _extend} from '../lib/helpers.js';
 import identifier from './identifier.js';
-import {klona} from 'klona';
 import w3cDateTime from './w3cDateTime.js';
 
 const signature = {
@@ -41,7 +40,7 @@ const schema = {
 
 export default function(extend) {
   if(extend) {
-    return _extend(true, klona(schema), extend);
+    return _extend(true, structuredClone(schema), extend);
   }
   return schema;
 }

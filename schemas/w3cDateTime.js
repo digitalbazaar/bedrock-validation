@@ -2,7 +2,6 @@
  * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
-import {klona} from 'klona';
 
 const schema = {
   title: 'W3C Date/Time',
@@ -19,7 +18,7 @@ const schema = {
 
 export default function(extend) {
   if(extend) {
-    return _extend(true, klona(schema), extend);
+    return _extend(true, structuredClone(schema), extend);
   }
   return schema;
 }
