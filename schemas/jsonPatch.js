@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import {klona} from 'klona';
@@ -18,10 +18,10 @@ const schema = {
         enum: ['add', 'copy', 'move', 'remove', 'replace', 'test']
       },
       from: {
-        type: 'string',
+        type: 'string'
       },
       path: {
-        type: 'string',
+        type: 'string'
       },
       value: {
         //type: ['number', 'string', 'boolean', 'object', 'array'],

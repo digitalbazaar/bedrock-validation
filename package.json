@@ -34,9 +34,7 @@
     "lib": "./lib"
   },
   "devDependencies": {
-    "eslint": "^8.57.1",
-    "eslint-config-digitalbazaar": "^5.2.0",
-    "eslint-plugin-jsdoc": "^50.5.0",
-    "eslint-plugin-unicorn": "^56.0.0"
+    "@digitalbazaar/eslint-config": "^8.0.1",
+    "eslint": "^9.39.4"
   }
 }

@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import idOrObjectWithId from './helpers/idOrObjectWithId.js';
@@ -31,7 +31,7 @@ const schema = {
       minItems: 1,
       // this first type must be VerifiablePresentation
       items: [
-        {type: 'string', const: 'VerifiablePresentation'},
+        {type: 'string', const: 'VerifiablePresentation'}
       ],
       // additional types must be strings
       additionalItems: {

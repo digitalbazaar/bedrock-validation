@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import {klona} from 'klona';
@@ -10,7 +10,7 @@ const schema = {
   title: 'Email',
   description: 'An email address.',
   type: 'string',
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   pattern: '^[-a-z0-9~!$%^&*_=+}{\\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\\'?]+)*@(((([a-z0-9]{1}[a-z0-9\\-]{0,63}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,63})$',
   minLength: 1,
   maxLength: 100,
@@ -24,7 +24,7 @@ export default function(extend, options) {
   if(options && options.lowerCaseOnly) {
     extend = extend || {};
     if(!('pattern' in extend)) {
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       extend.pattern = '^[-a-z0-9~!$%^&*_=+}{\\\'?]+(\\.[-a-z0-9~!$%^&*_=+}{\\\'?]+)*@(((([a-z0-9]{1}[a-z0-9\\-]{0,63}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,63})$';
     }
   }

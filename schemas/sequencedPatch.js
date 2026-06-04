@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2019-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2019-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import jsonPatch from './jsonPatch.js';
@@ -11,7 +11,7 @@ const schema = {
   type: 'object',
   properties: {
     target: {
-      type: 'string',
+      type: 'string'
     },
     // FIXME: also support `frame` property later
     patch: jsonPatch(),

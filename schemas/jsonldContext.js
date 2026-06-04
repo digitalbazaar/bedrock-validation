@@ -1,5 +1,5 @@
 /*!
- * Copyright (c) 2012-2022 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2026 Digital Bazaar, Inc.
  */
 import {extend as _extend} from '../lib/helpers.js';
 import {klona} from 'klona';
@@ -17,7 +17,7 @@ export default function(context, extend) {
       type: 'object'
       // FIXME: improve context object validator
     }, {
-      type: 'array',
+      type: 'array'
       // items added below if context param truthy
     }];
     if(context) {
