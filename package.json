@@ -24,8 +24,7 @@
   },
   "homepage": "https://github.com/digitalbazaar/bedrock-validation",
   "dependencies": {
-    "ajv": "^6.12.6",
-    "klona": "^2.0.6"
+    "ajv": "^6.12.6"
   },
   "peerDependencies": {
     "@bedrock/core": "^6.2.0"

@@ -3,7 +3,6 @@
  */
 import {extend as _extend} from '../lib/helpers.js';
 import idOrObjectWithId from './helpers/idOrObjectWithId.js';
-import {klona} from 'klona';
 import proof from './proof.js';
 import verifiableCredential from './verifiableCredential.js';
 
@@ -52,7 +51,7 @@ const schema = {
 
 export default function(extend) {
   if(extend) {
-    return _extend(true, klona(schema), extend);
+    return _extend(true, structuredClone(schema), extend);
   }
   return schema;
 }
