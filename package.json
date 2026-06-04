@@ -5,7 +5,7 @@
   "description": "Bedrock validation",
   "main": "./lib/index.js",
   "scripts": {
-    "lint": "eslint --ext .cjs,.js ."
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",

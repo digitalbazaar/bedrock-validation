@@ -10,7 +10,7 @@ const schema = {
   description: 'An email address.',
   type: 'string',
   // eslint-disable-next-line @stylistic/max-len
-  pattern: `^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@(((([a-z0-9]{1}[a-z0-9\-]{0,63}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,63})$`,
+  pattern: `^[-a-z0-9~!$%^&*_=+}{'?]+(\\.[-a-z0-9~!$%^&*_=+}{'?]+)*@(((([a-z0-9]{1}[a-z0-9\\-]{0,63}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,63})$`,
   minLength: 1,
   maxLength: 100,
   errors: {
@@ -24,7 +24,7 @@ export default function(extend, options) {
     extend = extend || {};
     if(!('pattern' in extend)) {
       // eslint-disable-next-line @stylistic/max-len
-      extend.pattern = `^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@(((([a-z0-9]{1}[a-z0-9\-]{0,63}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,63})$`;
+      extend.pattern = `^[-a-z0-9~!$%^&*_=+}{'?]+(\\.[-a-z0-9~!$%^&*_=+}{'?]+)*@(((([a-z0-9]{1}[a-z0-9\\-]{0,63}[a-z0-9]{1})|[a-z])\\.)+[a-z]{2,63})$`;
     }
   }
   if(extend) {
