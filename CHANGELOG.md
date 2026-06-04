@@ -1,5 +1,12 @@
 # bedrock-validation ChangeLog
 
+## 7.2.0 - 2026-06-dd
+
+### Changed
+- Update dependencies:
+  - `ajv@8`
+  - remove `klona` dependency.
+
 ## 7.1.1 - 2024-11-14
 
 ### Changed
