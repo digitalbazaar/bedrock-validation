@@ -1,5 +1,25 @@
 # bedrock-validation ChangeLog
 
+## Unreleased
+
+### Added
+- Add a `phoneNumber` schema for a phone number in E.164 form, alongside
+  `email`. Normalizing what a person typed remains the caller's
+  responsibility, so that only one form of a given number can reach storage
+  and a uniqueness constraint on it means what it says.
+
+### Changed
+- Apply `errors.mask` by schema rather than by which error failed, to better
+  hide a value that a schema has asked to be masked. Every value whose own
+  subschema sets `errors.mask` is now masked in both `details.instance` and
+  `details.value`, at any depth, for every error in the result. Such a value
+  could otherwise be published in a `public: true` error body and the error
+  log when a sibling property failed, or when the failure was raised at the
+  object level (`required`, `additionalProperties`), as only the failing
+  value's `details.value` was masked.
+- `errors.mask: false` now disables masking. Masking was detected by key
+  presence, so `mask: false` masked the value with the literal `false`.
+
 ## 7.2.0 - 2026-06-04
 
 ### Changed

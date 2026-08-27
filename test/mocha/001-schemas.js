@@ -442,6 +442,92 @@ describe('bedrock-validation', function() {
     });
   });
 
+  describe('phoneNumber', function() {
+    const schema = validation.getSchema({name: 'phoneNumber'});
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accept E.164 numbers', function() {
+      const accepted = [
+        '+15551234567', '+442079460123', '+81390123456',
+        // both ends of the E.164 length range
+        '+12', '+123456789012345'
+      ];
+      for(const instance of accepted) {
+        const result = validateInstance({instance, schema: 'phoneNumber'});
+        should.not.exist(result.error);
+        result.valid.should.be.true;
+      }
+    });
+    it('should reject numbers that are not normalized', function() {
+      const rejected = [
+        '', '5551234567', '(555) 123-4567', '+1 555 123 4567',
+        '+1-555-123-4567', '15551234567'
+      ];
+      for(const instance of rejected) {
+        const result = validateInstance({instance, schema: 'phoneNumber'});
+        result.valid.should.be.false;
+      }
+    });
+    it('should not echo the rejected number', function() {
+      const result = validateInstance({
+        instance: '555-867-5309', schema: 'phoneNumber'
+      });
+      result.valid.should.be.false;
+      const [{details}] = result.error.details.errors;
+      details.value.should.equal('***MASKED***');
+      details.instance.should.equal('***MASKED***');
+      JSON.stringify(result.error).should.not.contain('555-867-5309');
+    });
+
+    it('should mask the number when a sibling property fails', function() {
+      // the failing subschema is the object, not the phone field, so masking
+      // has to be driven by the schema rather than by which error fired
+      const schema = {
+        type: 'object',
+        properties: {phoneNumber: validation.getSchema({name: 'phoneNumber'})},
+        additionalProperties: false
+      };
+      const result = validateInstance({
+        instance: {phoneNumber: '+15550100010', unexpected: true}, schema
+      });
+      result.valid.should.be.false;
+      const [{details}] = result.error.details.errors;
+      details.instance.phoneNumber.should.equal('***MASKED***');
+      JSON.stringify(result.error).should.not.contain('15550100010');
+    });
+
+    it('should mask only the phone property of a larger instance', function() {
+      const schema = {
+        type: 'object',
+        properties: {
+          phoneNumber: validation.getSchema({name: 'phoneNumber'}),
+          name: {type: 'string'}
+        }
+      };
+      const result = validateInstance({
+        instance: {phoneNumber: '555-867-5309', name: 'Ada'}, schema
+      });
+      result.valid.should.be.false;
+      const [{details}] = result.error.details.errors;
+      details.instance.phoneNumber.should.equal('***MASKED***');
+      details.instance.name.should.equal('Ada');
+      JSON.stringify(result.error).should.not.contain('555-867-5309');
+    });
+    it('should reject a country code starting with zero', function() {
+      const result = validateInstance({
+        instance: '+05551234567', schema: 'phoneNumber'
+      });
+      result.valid.should.be.false;
+    });
+    it('should reject more than fifteen digits', function() {
+      const result = validateInstance({
+        instance: '+1234567890123456', schema: 'phoneNumber'
+      });
+      result.valid.should.be.false;
+    });
+  });
+
   describe('email', function() {
     const schema = validation.getSchema({name: 'email'});
     it('should be an Object', function() {
