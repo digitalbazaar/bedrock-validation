@@ -665,6 +665,55 @@ describe('bedrock-validation', function() {
       result.error.details.errors[0].details.value.should
         .equal('custom mask value');
     });
+    it('should mask the instance copy, not only the value', function() {
+      schema.errors.mask = true;
+      const result = validateInstance({instance: 'sl', schema});
+      result.valid.should.be.false;
+      /* Every error carries a copy of the validated instance under
+      `public: true`; masking only `details.value` leaves the value readable
+      in that copy. */
+      const [{details}] = result.error.details.errors;
+      details.instance.should.equal('***MASKED***');
+    });
+    it('should mask a masked property when a sibling fails', function() {
+      const objectSchema = {
+        type: 'object',
+        properties: {
+          secret: {type: 'string', errors: {mask: true}},
+          other: {type: 'string'}
+        }
+      };
+      const result = validateInstance({
+        instance: {secret: 'do-not-publish', other: 5}, schema: objectSchema
+      });
+      result.valid.should.be.false;
+      const [{details}] = result.error.details.errors;
+      details.instance.secret.should.equal('***MASKED***');
+      // the property that actually failed stays readable
+      details.instance.other.should.equal(5);
+      JSON.stringify(result.error).should.not.contain('do-not-publish');
+    });
+    it('should mask a masked property on an object-level failure', function() {
+      const objectSchema = {
+        type: 'object',
+        additionalProperties: false,
+        properties: {secret: {type: 'string', errors: {mask: true}}}
+      };
+      const result = validateInstance({
+        instance: {secret: 'do-not-publish', unexpected: true},
+        schema: objectSchema
+      });
+      result.valid.should.be.false;
+      JSON.stringify(result.error).should.not.contain('do-not-publish');
+    });
+    it('should not mask when `mask` is false', function() {
+      schema.errors.mask = false;
+      const result = validateInstance({instance: 'sl', schema});
+      result.valid.should.be.false;
+      const [{details}] = result.error.details.errors;
+      details.value.should.equal('sl');
+      delete schema.errors.mask;
+    });
     it('should accept valid slug with extend', function() {
       const extend = {name: 'test'};
       const schema = validation.schemas.slug(extend);
