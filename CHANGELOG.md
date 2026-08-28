@@ -1,5 +1,13 @@
 # bedrock-validation ChangeLog
 
+## 7.3.0 - 20xx-xx-xx
+
+### Added
+- Add a `phoneNumber` schema for a phone number in E.164 form, alongside
+  `email`. Normalizing what a person typed remains the caller's
+  responsibility, so that only one form of a given number can reach storage
+  and a uniqueness constraint on it means what it says.
+
 ## 7.2.1 - 2026-09-17
 
 ### Changed

@@ -442,6 +442,48 @@ describe('bedrock-validation', function() {
     });
   });
 
+  describe('phoneNumber', function() {
+    const schema = validation.getSchema({name: 'phoneNumber'});
+    it('should be an Object', function() {
+      schema.should.be.an.instanceof(Object);
+    });
+    it('should accept E.164 numbers', function() {
+      const accepted = [
+        '+15551234567', '+442079460123', '+81390123456',
+        // both ends of the E.164 length range
+        '+12', '+123456789012345'
+      ];
+      for(const instance of accepted) {
+        const result = validateInstance({instance, schema: 'phoneNumber'});
+        should.not.exist(result.error);
+        result.valid.should.be.true;
+      }
+    });
+    it('should reject numbers that are not normalized', function() {
+      const rejected = [
+        '', '5551234567', '(555) 123-4567', '+1 555 123 4567',
+        '+1-555-123-4567', '15551234567'
+      ];
+      for(const instance of rejected) {
+        const result = validateInstance({instance, schema: 'phoneNumber'});
+        result.valid.should.be.false;
+      }
+    });
+
+    it('should reject a country code starting with zero', function() {
+      const result = validateInstance({
+        instance: '+05551234567', schema: 'phoneNumber'
+      });
+      result.valid.should.be.false;
+    });
+    it('should reject more than fifteen digits', function() {
+      const result = validateInstance({
+        instance: '+1234567890123456', schema: 'phoneNumber'
+      });
+      result.valid.should.be.false;
+    });
+  });
+
   describe('email', function() {
     const schema = validation.getSchema({name: 'email'});
     it('should be an Object', function() {
