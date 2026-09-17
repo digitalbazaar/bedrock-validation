@@ -7,6 +7,10 @@
   "scripts": {
     "lint": "eslint"
   },
+  "files": [
+    "lib/**/*.js",
+    "schemas/**/*.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/digitalbazaar/bedrock-validation"
