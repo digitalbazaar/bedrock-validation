@@ -1,5 +1,10 @@
 # bedrock-validation ChangeLog
 
+## 7.2.1 - 2026-xx-xx
+
+### Fixed
+- Limit packaged files.
+
 ## 7.2.0 - 2026-06-04
 
 ### Changed
