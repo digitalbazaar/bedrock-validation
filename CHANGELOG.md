@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 7.2.1 - 2026-xx-xx
+## 7.2.1 - 2026-09-17
 
 ### Changed
 - Update peer dependencies.
