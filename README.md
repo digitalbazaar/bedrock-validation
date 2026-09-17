@@ -1,18 +1,19 @@
 # bedrock-validation
 
-[![Build Status](http://ci.digitalbazaar.com/buildStatus/icon?job=bedrock-validation)](http://ci.digitalbazaar.com/job/bedrock-validation)
-
 A [bedrock][] module that provides a express middleware and an API for
 validating data structures and their contents. **bedrock-validation** uses
 schemas based on [JSON schema][].
 
 ## Requirements
 
-- npm v6+
+This software requires and supports maintained recent versions of Node.js and
+browsers. Updates may remove support for older unmaintained platform versions.
+Please use dependency version lock files and testing to ensure compatibility
+with this software.
 
 ## Quick Examples
 
-```
+```sh
 npm install @bedrock/validation
 ```
 
