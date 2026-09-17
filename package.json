@@ -31,13 +31,13 @@
     "ajv": "^8.20.0"
   },
   "peerDependencies": {
-    "@bedrock/core": "^6.2.0"
+    "@bedrock/core": "^6.3.0"
   },
   "directories": {
     "lib": "./lib"
   },
   "devDependencies": {
-    "@digitalbazaar/eslint-config": "^8.0.1",
-    "eslint": "^9.39.4"
+    "@digitalbazaar/eslint-config": "^9.0.0",
+    "eslint": "^10.10.0"
   }
 }

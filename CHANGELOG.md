@@ -2,6 +2,10 @@
 
 ## 7.2.1 - 2026-xx-xx
 
+### Changed
+- Update peer dependencies.
+  - `@bedrock/core@6.3.0`.
+
 ### Fixed
 - Limit packaged files.
 
