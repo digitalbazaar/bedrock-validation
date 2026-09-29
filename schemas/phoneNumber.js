@@ -14,6 +14,7 @@ const schema = {
   minLength: 3,
   maxLength: 16,
   errors: {
+    mask: true,
     invalid: 'The phone number must be in E.164 form, such as +15551234567.',
     missing: 'Please enter a phone number.'
   }
