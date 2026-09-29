@@ -482,6 +482,13 @@ describe('bedrock-validation', function() {
       });
       result.valid.should.be.false;
     });
+    it('should mask a rejected phone number', function() {
+      const result = validateInstance({
+        instance: '+1 555 123 4567', schema: 'phoneNumber'
+      });
+      result.valid.should.be.false;
+      result.error.details.errors[0].details.value.should.equal('***MASKED***');
+    });
   });
 
   describe('email', function() {
