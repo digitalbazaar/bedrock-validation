@@ -1,5 +1,20 @@
 # bedrock-validation ChangeLog
 
+## 7.2.2 - 20xx-xx-xx
+
+### Changed
+- Apply `errors.mask` by schema rather than by which error failed, to better
+  hide a value that a schema has asked to be masked. Every value whose own
+  subschema sets `errors.mask` is now masked in both `details.instance` and
+  `details.value`, at any depth, for every error in the result. Such a value
+  could otherwise be published in a `public: true` error body and the error
+  log when a sibling property failed, or when the failure was raised at the
+  object level (`required`, `additionalProperties`), as only the failing
+  value's `details.value` was masked. Via `createValidateMiddleware` that
+  copy is the whole request body, so any masked field in it was affected.
+- `errors.mask: false` now disables masking. Masking was detected by key
+  presence, so `mask: false` masked the value with the literal `false`.
+
 ## 7.2.1 - 2026-09-17
 
 ### Changed
