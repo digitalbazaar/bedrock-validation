@@ -442,8 +442,8 @@ describe('bedrock-validation', function() {
     });
   });
 
-  describe('phoneNumber', function() {
-    const schema = validation.getSchema({name: 'phoneNumber'});
+  describe('telephone', function() {
+    const schema = validation.getSchema({name: 'telephone'});
     it('should be an Object', function() {
       schema.should.be.an.instanceof(Object);
     });
@@ -454,7 +454,7 @@ describe('bedrock-validation', function() {
         '+12', '+123456789012345'
       ];
       for(const instance of accepted) {
-        const result = validateInstance({instance, schema: 'phoneNumber'});
+        const result = validateInstance({instance, schema: 'telephone'});
         should.not.exist(result.error);
         result.valid.should.be.true;
       }
@@ -465,26 +465,26 @@ describe('bedrock-validation', function() {
         '+1-555-123-4567', '15551234567'
       ];
       for(const instance of rejected) {
-        const result = validateInstance({instance, schema: 'phoneNumber'});
+        const result = validateInstance({instance, schema: 'telephone'});
         result.valid.should.be.false;
       }
     });
 
     it('should reject a country code starting with zero', function() {
       const result = validateInstance({
-        instance: '+05551234567', schema: 'phoneNumber'
+        instance: '+05551234567', schema: 'telephone'
       });
       result.valid.should.be.false;
     });
     it('should reject more than fifteen digits', function() {
       const result = validateInstance({
-        instance: '+1234567890123456', schema: 'phoneNumber'
+        instance: '+1234567890123456', schema: 'telephone'
       });
       result.valid.should.be.false;
     });
     it('should mask a rejected phone number', function() {
       const result = validateInstance({
-        instance: '+1 555 123 4567', schema: 'phoneNumber'
+        instance: '+1 555 123 4567', schema: 'telephone'
       });
       result.valid.should.be.false;
       result.error.details.errors[0].details.value.should.equal('***MASKED***');

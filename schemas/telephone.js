@@ -7,8 +7,8 @@ import {extend as _extend} from '../lib/helpers.js';
 most fifteen digits in total. Callers normalize before validating, so only one
 form of a given number can reach a uniqueness constraint. */
 const schema = {
-  title: 'Phone Number',
-  description: 'A phone number in E.164 form.',
+  title: 'Telephone',
+  description: 'A telephone number in E.164 form.',
   type: 'string',
   pattern: '^\\+[1-9]\\d{1,14}$',
   minLength: 3,
