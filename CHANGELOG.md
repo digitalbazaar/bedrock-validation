@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 7.3.0 - 2026-mm-dd
+## 7.3.0 - 2026-10-02
 
 ### Added
 - Add a `telephone` schema for a phone number in E.164 form.
