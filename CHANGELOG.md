@@ -1,6 +1,6 @@
 # bedrock-validation ChangeLog
 
-## 7.4.0 - 2026-mm-dd
+## 7.4.0 - 2026-11-17
 
 ### Added
 - Support `$data` option for self-referencing data within schemas.
